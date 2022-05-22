@@ -47,27 +47,21 @@ public class Saida {
 	}
 	
 	public static void listarFilmes(ArrayList<Filme> filmes) {
-		System.out.println("\n\n");
-		System.out.println("  || Nome \t\t\t| Categoria \t| Duração  |   Preço   | Idade |  Alocado  ||");
-		System.out.println("  ||---------------------------------------------------------------------------------------------------||");
+		System.out.println("\n\n");		
+		System.out.println("  || Cod. | Nome   \t\t\t\t|   Preço   |  Alocado  ||");
+		System.out.println("  ||----------------------------------------------------------------------||");
 		
 		for (int i = 0; i < filmes.size(); i++) {
 			Filme filme = filmes.get(i);
-			System.out.print("  || "+ filme.getNome());
-			celulaDaTabela(35, filme.getNome());
-
-			System.out.print(" "+ filme.getCategoria());
-			celulaDaTabela(18, filme.getCategoria());
-
-			System.out.print(" "+ filme.getDuracao());
-			celulaDaTabela(9, filme.getDuracao());
+			System.out.print("  || "+ i);
+			celulaDaTabela(5, String.valueOf(i));
+			
+			System.out.print(" "+ filme.getNome());
+			celulaDaTabela(38, filme.getNome());
 
 			System.out.print(" "+ filme.getPreco());
 			celulaDaTabela(10, String.valueOf(filme.getPreco()));
 
-			System.out.print(" "+ filme.getClassificacaoIndicativa());
-			celulaDaTabela(6, String.valueOf(filme.getClassificacaoIndicativa()));
-			
 			String statusAlugado = filme.getAlugado() ? "Sim" : "Não";
 			System.out.print(" "+ statusAlugado);
 			celulaDaTabela(10, statusAlugado);
@@ -75,7 +69,7 @@ public class Saida {
 		}
 
 		System.out.print("\n\n\t");
-		System.out.print("    | Menu (Enter) |");
+		System.out.print("| Menu (Enter) |");
 		System.out.print(" \t\t\t");
 		System.out.print("  | Sair (0) | \t >");
 	}
