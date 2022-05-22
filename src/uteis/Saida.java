@@ -2,6 +2,7 @@ package uteis;
 
 import java.io.IOException;
 
+
 public class Saida {
 	
 	public static void cabecalho() {
@@ -29,7 +30,15 @@ public class Saida {
 		System.out.print("\n  >>  "+ descricaoCampo +": ");
 	}
 	
-	public static void limparConsole() {
-		
+	public static void limparConsole() throws InterruptedException, IOException {
+		for (int i = 0; i < 5; i++) {
+			System.out.println("\n");
+		}
+    }
+	
+	public static void resultadoFuncao(String mensagem) {
+		System.out.println("\n\n  ** "+ mensagem +" **  \n");
+		System.out.print("    | Menu (Enter) | \t");
+		System.out.print("  | Sair (0) | \t >");
 	}
 }
