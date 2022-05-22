@@ -41,6 +41,9 @@ public class Principal {
 					
 				}
 				case "2": {
+					Saida.listarFilmes(locadora.filmes);
+					opcaoMenu = Entrada.recebeString();
+					Saida.limparConsole();
 					break;
 				}
 				case "3": { // Buscar Filme
