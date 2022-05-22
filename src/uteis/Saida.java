@@ -30,14 +30,16 @@ public class Saida {
 		System.out.print("\n  >>  "+ descricaoCampo +": ");
 	}
 	
-	public static void limparConsole() throws InterruptedException, IOException {
+	public static void limparConsole() {
 		for (int i = 0; i < 5; i++) {
 			System.out.println("\n");
 		}
     }
 	
 	public static void resultadoFuncao(String mensagem) {
-		System.out.println("\n\n  ** "+ mensagem +" **  \n");
+		System.out.println("\n\n  -----------------------------------------------");
+		System.out.println("  ** "+ mensagem +" **");
+		System.out.println("  -----------------------------------------------\n");
 		System.out.print("    | Menu (Enter) | \t");
 		System.out.print("  | Sair (0) | \t >");
 	}
