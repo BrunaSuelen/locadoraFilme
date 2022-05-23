@@ -2,19 +2,16 @@ import classes.Filme;
 import classes.Locadora;
 import classes.Recibo;
 import uteis.*;
+import java.util.Calendar;
 
 
 public class Principal {
-
-//	public static void main(String[] args) {
-//		Locadora locadora = new Locadora(Rotina.gerarFilmes());
-//		Saida.listarRecibos(locadora.recibos);
-//	}
 	
 	public static void main(String[] args) {
 		String opcaoMenu;
 		Locadora locadora = new Locadora(Rotina.gerarFilmes());
-
+		Calendar date = Calendar.getInstance();
+		// Repete exibição de menu caso o usuário solicite
 		do {
 			Saida.menu();
 			opcaoMenu = Entrada.recebeString();
@@ -42,15 +39,13 @@ public class Principal {
 			        locadora.cadastrarFilme(new Filme(nome, categoria, duracao, preco, classificacao));
 					Saida.resultadoFuncao("Cadastro realizado com sucesso!");
 					opcaoMenu = Entrada.recebeString();
-					Saida.limparConsole();
 					break;
 					
 				}
-				case "2": {// Listar Filme
-					Saida.cabecalhoFuncionalidade("Listar Filme");
+				case "2": {// Listar Filmes
+					Saida.cabecalhoFuncionalidade("Listar Filmes");
 					Saida.listarFilmes(locadora.filmes);
 					opcaoMenu = Entrada.recebeString();
-					Saida.limparConsole();
 					break;
 				}
 				case "3": { // Locar Filme
@@ -61,18 +56,18 @@ public class Principal {
 					
 					if (idFilme != -1) {
 						Filme filme = locadora.filmes.get(idFilme);
-						Saida.exibirDetalhesFilme(filme);
+						Saida.detalhesFilme(filme);
 						Saida.campoDeEntrada("Deseja Alocar? | Sim (Enter) |  | Não (0) |");
 						String alocarFilme = Entrada.recebeString();
 						
-						if (!alocarFilme.equals("0")) {
+						if (!alocarFilme.equals("0")) {							
+							System.out.println("\n\n  |  Preencha o formulário de locação  |");
+							String dataLocacao = date.get(Calendar.DATE) + "." + date.get(Calendar.MONTH) + "." + date.get(Calendar.YEAR);
+
 							Saida.campoDeEntrada("Nome do Cliente");
 							String nomeCliente = Entrada.recebeString();
 
-							Saida.campoDeEntrada("Data da Locação");
-							String dataLocacao = Entrada.recebeString();
-
-							Saida.campoDeEntrada("Data de Devolução");
+							Saida.campoDeEntrada("Data de Devolução (Ex: dd.mm.aaaa)");
 							String dataDevolucao = Entrada.recebeString();
 							
 							Recibo recibo = new Recibo(filme, nomeCliente, dataLocacao, dataDevolucao);
@@ -80,27 +75,23 @@ public class Principal {
 							Saida.resultadoFuncao("Filme alocado com sucesso!");
 							opcaoMenu = Entrada.recebeString();
 						}
-						
-						Saida.limparConsole();
 					} else {
 						Saida.resultadoFuncao("Infelizmente, não encontramos o filme :(");
 						opcaoMenu = Entrada.recebeString();
-						Saida.limparConsole();
-					}
-					
+					}					
 					break;			
 				}
 				case "4": {// Listar Recibos
 					Saida.cabecalhoFuncionalidade("Listar Recibos");
 					Saida.listarRecibos(locadora.recibos);
 					opcaoMenu = Entrada.recebeString();
-					Saida.limparConsole();
 					break;
 				}
 			}
+			
+			Saida.limparConsole();
 		} while (!opcaoMenu.equals("0"));
 		
 		System.exit(0);
 	}
-
 }

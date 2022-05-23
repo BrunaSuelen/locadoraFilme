@@ -1,8 +1,5 @@
 package classes;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 
 public class Filme {
 	private String nome, categoria, duracao;

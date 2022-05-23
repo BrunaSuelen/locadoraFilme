@@ -5,9 +5,10 @@ import classes.Filme;
 
 
 public class Rotina {
+	/* Cadastra automáticamente 8 objetos para a classe filme */
 	public static ArrayList<Filme> gerarFilmes() {
 		ArrayList<Filme> filmes = new ArrayList<Filme>();	
-		filmes.add(new Filme("Alita nvjdvnjdnvjfjv dnvfjteste","Ação","2:30",14, 12));
+		filmes.add(new Filme("Alita","Ação","2:30",14, 12));
         filmes.add(new Filme("Gente Grande","Comedia","2:00",10, 12));
         filmes.add(new Filme("Invocação do mal","Terror","1:30",18, 12));
         filmes.add(new Filme("Barraca do beijo","Romance","2:56",14, 12));
