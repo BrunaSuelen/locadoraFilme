@@ -8,6 +8,7 @@ public class Entrada {
 	public static Scanner input = new Scanner(System.in);
 	
 	public static String recebeString() {
+		input = new Scanner(System.in);
 		return input.nextLine();
 	}
 	

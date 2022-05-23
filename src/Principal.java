@@ -1,10 +1,16 @@
 import classes.Filme;
 import classes.Locadora;
+import classes.Recibo;
 import uteis.*;
 
 
 public class Principal {
 
+//	public static void main(String[] args) {
+//		Locadora locadora = new Locadora(Rotina.gerarFilmes());
+//		Saida.listarRecibos(locadora.recibos);
+//	}
+	
 	public static void main(String[] args) {
 		String opcaoMenu;
 		Locadora locadora = new Locadora(Rotina.gerarFilmes());
@@ -15,7 +21,7 @@ public class Principal {
 			Saida.limparConsole();
 
 			switch (opcaoMenu) {
-				case "1": {
+				case "1": { // Registrar Filme
 					Saida.cabecalhoFuncionalidade("Registrar Filme");
 					
 					Saida.campoDeEntrada("Nome");
@@ -40,30 +46,61 @@ public class Principal {
 					break;
 					
 				}
-				case "2": {
+				case "2": {// Listar Filme
+					Saida.cabecalhoFuncionalidade("Listar Filme");
 					Saida.listarFilmes(locadora.filmes);
 					opcaoMenu = Entrada.recebeString();
 					Saida.limparConsole();
 					break;
 				}
-				case "3": { // Buscar Filme
+				case "3": { // Locar Filme
 					Saida.cabecalhoFuncionalidade("Buscar Filme");
 					Saida.campoDeEntrada("Informe o nome do filme que deseja");
 					String nomeFilmeDesejado = Entrada.recebeString();
-					Filme filme = locadora.buscarFilme(nomeFilmeDesejado);
+					int idFilme = locadora.buscarFilme(nomeFilmeDesejado);
 					
-					if (filme != null) {
+					if (idFilme != -1) {
+						Filme filme = locadora.filmes.get(idFilme);
+						Saida.exibirDetalhesFilme(filme);
+						Saida.campoDeEntrada("Deseja Alocar? | Sim (Enter) |  | Não (0) |");
+						String alocarFilme = Entrada.recebeString();
+						
+						if (!alocarFilme.equals("0")) {
+							Saida.campoDeEntrada("Nome do Cliente");
+							String nomeCliente = Entrada.recebeString();
+
+							Saida.campoDeEntrada("Data da Locação");
+							String dataLocacao = Entrada.recebeString();
+
+							Saida.campoDeEntrada("Data de Devolução");
+							String dataDevolucao = Entrada.recebeString();
+							
+							Recibo recibo = new Recibo(filme, nomeCliente, dataLocacao, dataDevolucao);
+							locadora.locarFilme(recibo, idFilme);
+							Saida.resultadoFuncao("Filme alocado com sucesso!");
+							opcaoMenu = Entrada.recebeString();
+						}
+						
 						Saida.limparConsole();
-						//filme.exibirFilme();
 					} else {
 						Saida.resultadoFuncao("Infelizmente, não encontramos o filme :(");
 						opcaoMenu = Entrada.recebeString();
 						Saida.limparConsole();
 					}
-					break;
 					
+					break;			
+				}
+				case "4": {// Listar Recibos
+					Saida.cabecalhoFuncionalidade("Listar Recibos");
+					Saida.listarRecibos(locadora.recibos);
+					opcaoMenu = Entrada.recebeString();
+					Saida.limparConsole();
+					break;
 				}
 			}
 		} while (!opcaoMenu.equals("0"));
+		
+		System.exit(0);
 	}
+
 }
