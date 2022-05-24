@@ -36,7 +36,7 @@ public class Principal {
 					Saida.campoDeEntrada("Classificação Indicativa");
 					int classificacao = Entrada.recebeInt();
 			        
-			        locadora.cadastrarFilme(new Filme(nome, categoria, duracao, preco, classificacao));
+			    locadora.cadastrarFilme(new Filme(nome, categoria, duracao, preco, classificacao));
 					Saida.resultadoFuncao("Cadastro realizado com sucesso!");
 					opcaoMenu = Entrada.recebeString();
 					break;
@@ -57,24 +57,33 @@ public class Principal {
 					if (idFilme != -1) {
 						Filme filme = locadora.filmes.get(idFilme);
 						Saida.detalhesFilme(filme);
-						Saida.campoDeEntrada("Deseja Alocar? | Sim (Enter) |  | Não (0) |");
-						String alocarFilme = Entrada.recebeString();
-						
-						if (!alocarFilme.equals("0")) {							
-							System.out.println("\n\n  |  Preencha o formulário de locação  |");
-							String dataLocacao = date.get(Calendar.DATE) + "." + date.get(Calendar.MONTH) + "." + date.get(Calendar.YEAR);
 
-							Saida.campoDeEntrada("Nome do Cliente");
-							String nomeCliente = Entrada.recebeString();
-
-							Saida.campoDeEntrada("Data de Devolução (Ex: dd.mm.aaaa)");
-							String dataDevolucao = Entrada.recebeString();
-							
-							Recibo recibo = new Recibo(filme, nomeCliente, dataLocacao, dataDevolucao);
-							locadora.locarFilme(recibo, idFilme);
-							Saida.resultadoFuncao("Filme alocado com sucesso!");
+						if (filme.getAlugado()) {
+							Saida.resultadoFuncao("Este filme já está alugado :/");
 							opcaoMenu = Entrada.recebeString();
+
+						} else {
+							Saida.campoDeEntrada("Deseja alugar? | Sim (Enter) |  | Não (0) |");
+							String alugarFilme = Entrada.recebeString();
+
+							if (!alugarFilme.equals("0")) {
+								System.out.println("\n\n  |  Preencha o formulário de aluguel  |");
+								String dataLocacao = date.get(Calendar.DATE) + "." + date.get(Calendar.MONTH) + "."
+										+ date.get(Calendar.YEAR);
+
+								Saida.campoDeEntrada("Nome do Cliente");
+								String nomeCliente = Entrada.recebeString();
+
+								Saida.campoDeEntrada("Data de Devolução (Ex: dd.mm.aaaa)");
+								String dataDevolucao = Entrada.recebeString();
+
+								Recibo recibo = new Recibo(filme, nomeCliente, dataLocacao, dataDevolucao);
+								locadora.locarFilme(recibo, idFilme);
+								Saida.resultadoFuncao("Filme alugado com sucesso!");
+								opcaoMenu = Entrada.recebeString();
+							}
 						}
+					
 					} else {
 						Saida.resultadoFuncao("Infelizmente, não encontramos o filme :(");
 						opcaoMenu = Entrada.recebeString();
