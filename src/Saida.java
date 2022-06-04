@@ -1,10 +1,4 @@
-package uteis;
-
 import java.util.ArrayList;
-
-import classes.Filme;
-import classes.Recibo;
-
 
 public class Saida {
 	
@@ -37,7 +31,7 @@ public class Saida {
 	 *  @param filmes*/
 	public static void listarFilmes(ArrayList<Filme> filmes) {
 		//Imprime o cabeçalho da tabela
-		System.out.print("\n  || Cod. | Nome   \t\t\t\t|   Preço   |  Alocado  ||");
+		System.out.print("\n  || Cod. | Nome   \t\t\t\t|   Preço   |  Locado  ||");
 		linhaTabela(68);
 		
 		//Preenche linha da tabela com os atributos do filme
