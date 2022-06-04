@@ -5,7 +5,7 @@ public class Principal {
 
     public static void main(String[] args) {
         String opcaoMenu;
-        Locadora locadora = new Locadora(Rotina.gerarFilmes());
+        Locadora locadora = new Locadora();
         Calendar date = Calendar.getInstance();
         // Repete exibição de menu caso o usuário solicite
         do {
@@ -40,7 +40,7 @@ public class Principal {
                 }
                 case "2": {// Listar Filmes
                     Saida.cabecalhoFuncionalidade("Listar Filmes");
-                    Saida.listarFilmes(locadora.filmes);
+                    locadora.listarFilmes();
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
@@ -52,14 +52,14 @@ public class Principal {
 
                     if (idFilme != -1) {
                         Filme filme = locadora.filmes.get(idFilme);
-                        Saida.detalhesFilme(filme);
+                        filme.exibirDetalhesFilme();
 
                         if (filme.getAlugado()) {
                             Saida.resultadoFuncao("Este filme já está alugado :/");
                             opcaoMenu = Entrada.recebeString();
 
                         } else {
-                            Saida.campoDeEntrada("Deseja alugar? | Sim (Enter) |  | Não (0) |");
+                            Saida.campoDeEntrada("Deseja alugar?    | Sim (Enter) |     | Não (0) |");
                             String alugarFilme = Entrada.recebeString();
 
                             if (!alugarFilme.equals("0")) {
@@ -73,10 +73,10 @@ public class Principal {
                                 Saida.campoDeEntrada("Data de Devolução (Ex: dd.mm.aaaa)");
                                 String dataDevolucao = Entrada.recebeString();
 
-                                Recibo recibo = new Recibo(filme, nomeCliente, dataLocacao, dataDevolucao);
-                                locadora.locarFilme(recibo, idFilme);
-                                Saida.resultadoFuncao("Filme alugado com sucesso!");
-                                opcaoMenu = Entrada.recebeString();
+//                                Contrato recibo = new Contrato(filme, nomeCliente, dataLocacao, dataDevolucao);
+//                                locadora.alugarFilme(recibo, idFilme);
+//                                Saida.resultadoFuncao("Filme alugado com sucesso!");
+//                                opcaoMenu = Entrada.recebeString();
                             }
                         }
 
@@ -88,7 +88,7 @@ public class Principal {
                 }
                 case "4": {// Listar Recibos
                     Saida.cabecalhoFuncionalidade("Listar Recibos");
-                    Saida.listarRecibos(locadora.recibos);
+                    locadora.listarContratosAluguel();
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }

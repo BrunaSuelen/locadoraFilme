@@ -1,5 +1,3 @@
-
-
 public class Filme {
 
     private String nome, categoria, duracao;
@@ -62,5 +60,28 @@ public class Filme {
 
     public void setAlugado(boolean alugado) {
         this.alugado = alugado;
+    }
+
+    /* Imprime feedback sobre resultado da função
+    * 
+    *  @param mensagem: Mensagem que descreve resultado da função*/
+    public void exibirDetalhesFilme() {
+        System.out.print("\n  ");
+        Saida.centralizarValor("DETALHES DO FILME", 50, "||", " ");
+        Saida.linhaTabela(50);
+        System.out.print("  ");
+
+        Saida.centralizarValor(this.nome, 50, "||", " ");
+        Saida.pularLinhaTabela(50);
+
+        Saida.exibirAtributoDetalhesObjeto("Categoria", this.categoria);
+        Saida.exibirAtributoDetalhesObjeto("Duração", this.duracao);
+        Saida.exibirAtributoDetalhesObjeto("Preço", String.valueOf(this.preco));
+        Saida.exibirAtributoDetalhesObjeto("Classificação", String.valueOf(this.classificacaoIndicativa));
+        Saida.exibirAtributoDetalhesObjeto("Alugado", this.alugado ? "Sim" : "Não");
+
+        Saida.pularLinhaTabela(50);
+        Saida.linhaTabela(50);
+        System.out.print("\n");
     }
 }
