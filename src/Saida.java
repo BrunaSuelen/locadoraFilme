@@ -18,7 +18,7 @@ public class Saida {
         System.out.println("\n");
         System.out.println("  | 1 |  Registrar Filme");
         System.out.println("  | 2 |  Listar Filmes");
-        System.out.println("  | 3 |  Locar Filme");
+        System.out.println("  | 3 |  Alugar Filme");
         System.out.println("  | 4 |  Listar Recibos");
         System.out.println("  | 0 |  Sair");
         campoDeEntrada("Digite a opção desejada");
@@ -58,6 +58,10 @@ public class Saida {
         System.out.print(":    " + valor);
         preencheEspacoFaltante(21, valor, " ");
         System.out.print("||");
+    }
+
+    public static void exibirErro(String mensagemErro) {
+        System.out.println("\n  *** " + mensagemErro + " ***");
     }
 
     /* Método que calcula quandos caracteres faltam para alcançar um determinado

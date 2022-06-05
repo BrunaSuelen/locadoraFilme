@@ -1,7 +1,6 @@
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class ContratoAluguel extends Contrato {    
@@ -10,6 +9,7 @@ public class ContratoAluguel extends Contrato {
 
     public ContratoAluguel(Filme filme, Cliente cliente) {
         super(filme, cliente);
+        sdf.setLenient(false);
     }
 
     public String getDataDevolucao() {        
@@ -24,16 +24,16 @@ public class ContratoAluguel extends Contrato {
     */
     public int setDataDevolucao(String dataDevolucao) {        
         Date dataFormatada = this.converteStringParaData(dataDevolucao);
+        this.dataDevolucao = dataFormatada;
         
         if (dataFormatada == null) {
             return 1;
         }
         
-        if (this.verificarDataDeDevolucao(dataFormatada)) {
+        if (this.verificarDataDeDevolucao()) {
             return 2;
         }
         
-        this.dataDevolucao = dataFormatada;
         return 0;
     }
     
@@ -42,7 +42,6 @@ public class ContratoAluguel extends Contrato {
             return sdf.parse(dataDevolucao);
             
         } catch(ParseException e) {
-            System.out.print(e);
             return null;
         }
     }
@@ -53,9 +52,24 @@ public class ContratoAluguel extends Contrato {
     * @param dataDevolucao: Data prevista para devolução do filme
     * @return 0: Data igual / 1: Devolucão ma
     */
-    private boolean verificarDataDeDevolucao(Date dataDevolucao) {
-        int comparacao = dataRegistro.compareTo(dataDevolucao);
+    public boolean verificarDataDeDevolucao() {
+        int comparacao = dataDevolucao.compareTo(dataRegistro);
         
         return comparacao != 1;        
+    }
+    
+    /* Verifica se a data de devolucao é menor que a data de aluguel;
+    * 
+    * @param dataAluguel: Data que o aluguel foi registrado
+    * @param dataDevolucao: Data prevista para devolução do filme
+    * @return 0: Data igual / 1: Devolucão ma
+    */
+    public String mensagemErroValidacaoDataDevolucao(int erro) {                
+        switch(erro) {
+            case 1: return "Formato de data inválido";
+            case 2: return "A data de devolução não pode ser inferior à data do aluguel";
+        }
+        
+        return "";
     }
 }

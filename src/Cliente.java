@@ -1,13 +1,11 @@
-
-
 public class Cliente {
     
-    private String nome, cpf, email;
+    private String nome, cpf, telefone;
 
-    public Cliente(String nome, String cpf, String email) {
+    public Cliente(String nome, String cpf, String telefone) {
         this.nome = nome;
         this.cpf = cpf;
-        this.email = email;
+        this.telefone = telefone;
     }
 
     public String getNome() {
@@ -27,12 +25,10 @@ public class Cliente {
     }
 
     public String getEmail() {
-        return email;
+        return telefone;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
-    
-    
 }

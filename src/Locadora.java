@@ -1,4 +1,6 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class Locadora {
@@ -7,12 +9,13 @@ public class Locadora {
     public ArrayList<Contrato> contratos;
 
     public Locadora() {
-        this.contratos = new ArrayList<Contrato>();
-        this.filmes = gerarFilmes();
+        this.contratos = new ArrayList<>();
+        this.filmes = new ArrayList<>();
+        this.gerarFilmes();
     }
 
     /* Cadastra automáticamente 8 objetos para a classe filme */
-    public ArrayList<Filme> gerarFilmes() {
+    public final void gerarFilmes() {
         filmes.add(new Filme("Alita","Ação","2:30",14, 12));
         filmes.add(new Filme("Gente Grande","Comedia","2:00",10, 12));
         filmes.add(new Filme("Invocação do mal","Terror","1:30",18, 12));
@@ -21,7 +24,6 @@ public class Locadora {
         filmes.add(new Filme("A cabana","Drama","1:50",16, 12));
         filmes.add(new Filme("Missão Impossível","Ação","2:10",12, 12));
         filmes.add(new Filme("Homem Aranha","Ação","2:10",12, 12));
-        return filmes;
     }
         
     /* Adiciona o filme enviado ao arrayList de filmes 
@@ -72,29 +74,33 @@ public class Locadora {
             Saida.centralizarValor("Nenhum recibo encontrado", 68, "  ||", " ");
 
         } else {
-            //Preenche linha da tabela com os atributos do recibo
-            for (int i = 0; i < contratos.size(); i++) {
-                Contrato recibo = contratos.get(i);
-                System.out.print("  || " + i);
-                Saida.preencheEspacoFaltante(5, String.valueOf(i), " ");
-
-                System.out.print("| " + recibo.getNomeCliente());
-                Saida.preencheEspacoFaltante(28, contratos.get(i).getNomeCliente(), " ");
-
-                System.out.print("| " + recibo.getDataLocacao());
-                Saida.preencheEspacoFaltante(15, String.valueOf(recibo.getDataLocacao()), " ");
-
-                System.out.print("| " + recibo.getDataDevolucao());
-                Saida.preencheEspacoFaltante(15, String.valueOf(recibo.getDataDevolucao()), " ");
-
-                System.out.print("||");
-            }
+            //Preenche linha da tabela com os atributos do contrato
+//            for (int i = 0; i < contratos.size(); i++) {
+//                Contrato contrato = contratos.get(i);
+//                System.out.print("  || " + i);
+//                Saida.preencheEspacoFaltante(5, String.valueOf(i), " ");
+//
+//                System.out.print("| " + contrato.getCliente());
+//                Saida.preencheEspacoFaltante(28, contratos.get(i).getCliente(), " ");
+//
+//                System.out.print("| " + contrato.getDataLocacao());
+//                Saida.preencheEspacoFaltante(15, String.valueOf(contrato.getDataLocacao()), " ");
+//
+//                System.out.print("| " + contrato.getDataDevolucao());
+//                Saida.preencheEspacoFaltante(15, String.valueOf(contrato.getDataDevolucao()), " ");
+//
+//                System.out.print("||");
+//            }
         }
 
         Saida.linhaTabela(70);
         Saida.exibirBotoesDeAcao();
     }
 
+    public void listarAlugueisAtrasados() {
+        
+    }
+    
     /* Realiza o processo de aluguel do filme.
     * Adicionado o contrato enviado ao arrayList de contratos e altera status de aluguel do filme
     * 
