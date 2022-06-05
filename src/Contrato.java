@@ -1,16 +1,16 @@
 
+import java.util.Date;
+
 public class Contrato {
 
     private Filme filme;
     private Cliente cliente;
-    private String dataLocacao;
-    private String dataDevolucao;
+    protected Date dataRegistro;
 
-    public Contrato(Filme filme, Cliente cliente, String dataLocacao, String dataDevolucao) {
+    public Contrato(Filme filme, Cliente cliente) {
         this.filme = filme;
         this.cliente = cliente;
-        this.dataLocacao = dataLocacao;
-        this.dataDevolucao = dataDevolucao;
+        this.setDataRegistro();
     }
 
     public Filme getFilme() {
@@ -21,28 +21,19 @@ public class Contrato {
         this.filme = filme;
     }
 
-    public String getNomeCliente() {
-        return cliente.getNome();
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setNomeCliente(Cliente nomeCliente) {
-        this.cliente = nomeCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public String getDataLocacao() {
-        return dataLocacao;
+    public Date getDataRegistro() {
+        return dataRegistro;
     }
 
-    public void setDataLocacao(String dataLocacao) {
-        this.dataLocacao = dataLocacao;
+    private void setDataRegistro() {
+        this.dataRegistro = new Date();
     }
-
-    public String getDataDevolucao() {
-        return dataDevolucao;
-    }
-
-    public void setDataDevolucao(String dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
-    }
-
 }
