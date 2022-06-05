@@ -50,6 +50,13 @@ public class Principal {
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
+                case "5": {// Listar Clientes
+                    Saida.cabecalhoFuncionalidade("Listar Clientes");
+                    locadora.listarClientes(false);
+                    Saida.exibirBotoesDeAcao();
+                    opcaoMenu = Entrada.recebeString();
+                    break;
+                }
             }
 
             Saida.limparConsole();

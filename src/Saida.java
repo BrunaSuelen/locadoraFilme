@@ -20,6 +20,7 @@ public class Saida {
         System.out.println("  | 2 |  Listar Filmes");
         System.out.println("  | 3 |  Alugar Filme");
         System.out.println("  | 4 |  Listar Recibos");
+        System.out.println("  | 5 |  Listar Clientes");
         System.out.println("  | 0 |  Sair");
         campoDeEntrada("Digite a opção desejada");
     }
