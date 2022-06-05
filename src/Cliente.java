@@ -24,11 +24,12 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public String getEmail() {
+    public String getTelefone() {
         return telefone;
     }
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+    
 }
