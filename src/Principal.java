@@ -26,7 +26,7 @@ public class Principal {
                 }
                 case "3": { // Listar Filmes Atrasados
                     Saida.cabecalhoFuncionalidade("Listar Filmes Atrasados");
-                    locadora.listarContratosAluguel(true);
+                    locadora.listarContratosAluguel(locadora.buscarAlugueisAtrasados());
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
@@ -35,31 +35,36 @@ public class Principal {
                     fluxoCriarContrato(true);
                     break;
                 }
-                case "5": { // Vender Filme
+                case "5": { // Registrar Devolução
+                    Saida.cabecalhoFuncionalidade("Registrar Devolução");
+                    fluxoRegistrarDevolucao();
+                    break;
+                }
+                case "6": { // Vender Filme
                     Saida.cabecalhoFuncionalidade("Vender Filme");
                     fluxoCriarContrato(false);
                     break;
                 }
-                case "6": {// Listar Contratos Aluguel
+                case "7": {// Listar Contratos Aluguel
                     Saida.cabecalhoFuncionalidade("Listar Contratos Aluguel");
-                    locadora.listarContratosAluguel(false);
+                    locadora.listarContratosAluguel(locadora.contratosAluguel);
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
-                case "7": {// Listar Contratos Venda
+                case "8": {// Listar Contratos Venda
                     Saida.cabecalhoFuncionalidade("Listar Contratos de Venda");
                     locadora.listarContratosVenda();
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
-                case "8": {// Listar Clientes
+                case "9": {// Listar Clientes
                     Saida.cabecalhoFuncionalidade("Listar Clientes");
                     locadora.listarClientes(false);
                     Saida.exibirBotoesDeAcao();
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
-                case "9": { // Registrar Cliente
+                case "10": { // Registrar Cliente
                     fluxoRegistrarCliente();
                     Saida.resultadoFuncao("Cadastro realizado com sucesso!");
                     opcaoMenu = Entrada.recebeString();
@@ -72,6 +77,28 @@ public class Principal {
         } while (!opcaoMenu.equals("0"));
 
         System.exit(0);
+    }
+    
+    public static void fluxoRegistrarDevolucao() {
+        locadora.listarContratosAluguel(locadora.buscarAlugueisVigentes());
+        boolean contratoInvalido = true;
+
+        do {      
+            Saida.campoDeEntrada("Informe o código contrato");
+            int codContrato = Entrada.recebeInt();
+            int contratosSize = locadora.contratosAluguel.size();
+            locadora.registrarDevolucaoFilme(codContrato);
+
+            if (contratosSize >= 0 && (contratosSize - 1) >= codContrato) {
+                contratoInvalido = false;
+            } else {                    
+                Saida.exibirErro("Código inválido");
+            }                       
+        } while(contratoInvalido);
+        
+        Saida.exibirBotoesDeAcao();
+        Saida.resultadoFuncao("Devolução realizado com sucesso!");
+        opcaoMenu = Entrada.recebeString();
     }
       
     public static void fluxoCriarContrato(boolean ehContratoAluguel) {

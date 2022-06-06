@@ -16,16 +16,17 @@ public class Saida {
     public static void menu() {
         cabecalho();
         System.out.println("\n");
-        System.out.println("  | 1 |  Registrar Filme");
-        System.out.println("  | 2 |  Listar Filmes");
-        System.out.println("  | 3 |  Listar Filmes Atrasados");
-        System.out.println("  | 4 |  Alugar Filme");
-        System.out.println("  | 5 |  Vender Filme");
-        System.out.println("  | 6 |  Listar Contrato de Aluguel");
-        System.out.println("  | 7 |  Listar Contrato de Venda");
-        System.out.println("  | 8 |  Listar Clientes");
-        System.out.println("  | 9 |  Registrar Cliente");
-        System.out.println("  | 0 |  Sair");
+        System.out.println("  | 1  |  Registrar Filme");
+        System.out.println("  | 2  |  Listar Filmes");
+        System.out.println("  | 3  |  Listar Filmes Atrasados");
+        System.out.println("  | 4  |  Alugar Filme");
+        System.out.println("  | 5  |  Registrar Devolução");
+        System.out.println("  | 6  |  Vender Filme");
+        System.out.println("  | 7  |  Listar Contrato de Aluguel");
+        System.out.println("  | 8  |  Listar Contrato de Venda");
+        System.out.println("  | 9  |  Listar Clientes");
+        System.out.println("  | 10 |  Registrar Cliente");
+        System.out.println("  | 0  |  Sair");
         campoDeEntrada("Digite a opção desejada");
     }
 

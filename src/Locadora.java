@@ -1,6 +1,4 @@
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class Locadora {
@@ -96,39 +94,50 @@ public class Locadora {
         Saida.linhaTabela(68);
     }
 
-    public void listarContratosAluguel(boolean exibirApenasAtrasados) {
+    public void listarContratosAluguel(ArrayList<ContratoAluguel> contratos) {
         //Imprime o cabeçalho da tabela
-        System.out.print("\n  || Cod. | Nome Cliente \t| CPF       | Filme \t| Registrado em | Devolução em |  Status  ||");
-        Saida.linhaTabela(80);
+        System.out.print("\n  || Cod. | Cliente \t\t| CPF  \t");
+        System.out.print("\t | Filme \t   | Registrado em   | Devolução em   | Devolvido |  Status  ||");
+        Saida.linhaTabela(119);
         
-        ArrayList<ContratoAluguel> contratos = exibirApenasAtrasados ? buscarAlugueisAtrasados() : contratosAluguel;
         for (int i = 0; i < contratos.size(); i++) {
             ContratoAluguel contrato = contratos.get(i);
             contrato.exibirContratoParaTabela(i);
         
             System.out.print("| " + contrato.getDataDevolucao());
-            Saida.preencheEspacoFaltante(15, contrato.getDataDevolucao(), " ");
+            Saida.preencheEspacoFaltante(16, contrato.getDataDevolucao(), " ");
             
             String status = contrato.verificarAtrasoAlguel() ? "Atrasado" : "Em dia";
-            System.out.print("||");
+            System.out.print("| " + status);
+            Saida.preencheEspacoFaltante(10, status, " ");            
+            
+            String devolvido = contrato.isDevolvido() ? "Sim" : "Não";
+            System.out.print("| " + devolvido);
+            Saida.preencheEspacoFaltante(8, devolvido, " ");
+            
+            System.out.println("||");
         }
 
-        Saida.linhaTabela(80);
+        Saida.linhaTabela(119);
         Saida.exibirBotoesDeAcao();
     }
     
     public void listarContratosVenda() {
         //Imprime o cabeçalho da tabela
-        System.out.print("\n  || Cod. | Nome Cliente \t| CPF       | Filme \t| Registrado em ||");
+        System.out.print("\n  || Cod. | Nome Cliente \t| CPF \t\t | Filme     \t   | Registrado em ||");
         Saida.linhaTabela(80);
         
-        for (int i = 0; i < contratosVenda.size(); i++) {
-            Contrato contrato = contratosVenda.get(i);
-            contrato.exibirContratoParaTabela(i);
-            
-            System.out.print("||");
-        }
+         if (contratosVenda.isEmpty()) {
+            Saida.centralizarValor("Nenhum contrato encontrado", 66, "  ||", " ");
+        } else {
+             for (int i = 0; i < contratosVenda.size(); i++) {
+                Contrato contrato = contratosVenda.get(i);
+                contrato.exibirContratoParaTabela(i);
 
+                System.out.print("||");
+            }
+        }
+        
         Saida.linhaTabela(80);
         Saida.exibirBotoesDeAcao();
     }
@@ -136,17 +145,17 @@ public class Locadora {
     /* Imprime uma tabela de clientes previamente cadastrados */
     public void listarClientes(boolean exibirBotaoNovo) {
         //Imprime o cabeçalho da tabela
-        System.out.print("\n  || Cod. | Nome   \t\t\t|     CPF     |     Telefone     ||");
-        Saida.linhaTabela(68);
+        System.out.print("\n  || Cod. | Nome   \t\t\t| CPF \t\t  |     Telefone     ||");
+        Saida.linhaTabela(72);
         
         if (exibirBotaoNovo) {
             System.out.print("  || 0");
             Saida.preencheEspacoFaltante(5, "0", " ");
 
             System.out.print("| NOVO CLIENTE");
-            Saida.preencheEspacoFaltante(60, "NOVO CLIENTE", " ");
+            Saida.preencheEspacoFaltante(64, "NOVO CLIENTE", " ");
             System.out.print("||");
-            Saida.linhaTabela(68);
+            Saida.linhaTabela(72);
         }
 
         if (clientes.isEmpty()) {
@@ -162,15 +171,15 @@ public class Locadora {
                 Saida.preencheEspacoFaltante(27, cliente.getNome(), " ");
 
                 System.out.print("| " + cliente.getCpf());
-                Saida.preencheEspacoFaltante(12, cliente.getCpf(), " ");
+                Saida.preencheEspacoFaltante(15, cliente.getCpf(), " ");
 
                 System.out.print("| " + cliente.getTelefone());
-                Saida.preencheEspacoFaltante(17, cliente.getTelefone(), " ");
+                Saida.preencheEspacoFaltante(18, cliente.getTelefone(), " ");
                 System.out.println("||");
             }
         }
         
-        Saida.linhaTabela(68);
+        Saida.linhaTabela(72);
     }
         
     /* Realiza o processo de aluguel do cliente.
@@ -223,5 +232,23 @@ public class Locadora {
         }
         
         return alugueisAtrasados;
+    }
+
+    public ArrayList<ContratoAluguel> buscarAlugueisVigentes() {
+        ArrayList<ContratoAluguel> alugueisAtrasados = new ArrayList<>();
+        
+        for (int i = 0; i < contratosAluguel.size(); i++) {
+            ContratoAluguel contrato = contratosAluguel.get(i);
+            if (!contrato.isDevolvido()) {
+                alugueisAtrasados.add(contrato);
+            }
+        }
+        
+        return alugueisAtrasados;
+    }
+    
+    public void registrarDevolucaoFilme(int codContrato) {
+        contratosAluguel.get(codContrato).setDevolvido(true);
+        contratosAluguel.get(codContrato).getFilme().setAlugado(false);        
     }
 }

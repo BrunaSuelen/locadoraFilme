@@ -45,7 +45,7 @@ public class Contrato {
         Saida.preencheEspacoFaltante(5, String.valueOf(codContrato), " ");
 
         System.out.print("| " + this.cliente.getNome());
-        Saida.preencheEspacoFaltante(28, this.cliente.getNome(), " ");
+        Saida.preencheEspacoFaltante(19, this.cliente.getNome(), " ");
 
         System.out.print("| " + this.cliente.getCpf());
         Saida.preencheEspacoFaltante(15, this.cliente.getCpf(), " ");
@@ -54,7 +54,7 @@ public class Contrato {
         Saida.preencheEspacoFaltante(15,  this.filme.getNome(), " ");
         
         System.out.print("| " + this.getDataRegistro());
-        Saida.preencheEspacoFaltante(15, this.getDataRegistro(), " ");
+        Saida.preencheEspacoFaltante(16, this.getDataRegistro(), " ");
     }
 
     protected Date converteStringParaData(String dataDevolucao) {        
