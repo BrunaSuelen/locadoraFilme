@@ -15,7 +15,7 @@ public class ContratoAluguel extends Contrato {
     }
 
     public String getDataDevolucao() {
-        return sdf.format(this.dataDevolucao.toString());
+        return sdf.format(this.dataDevolucao);
     }
 
     public boolean isDevolvido() {

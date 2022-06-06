@@ -33,7 +33,7 @@ public class Contrato {
     }
 
     public String getDataRegistro() {
-        return sdf.format(this.dataRegistro.toString());
+        return sdf.format(this.dataRegistro);
     }
 
     public void setDataRegistro(Date dataRegistro) {

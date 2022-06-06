@@ -32,16 +32,16 @@ public class Locadora {
         
         ContratoAluguel contratoAluguel2 = new ContratoAluguel(filme2, cliente2, true);
         contratoAluguel2.setDataRegistro(contratoAluguel1.converteStringParaData("12/05/2022"));
-        contratoAluguel1.setDataDevolucao("14/05/2022");
+        contratoAluguel2.setDataDevolucao("14/05/2022");
         
         
         filmes.add(filme1);
-        filmes.add(filme2);
         filmes.add(new Filme("Barraca do beijo","Romance","2:56",14, 12));
         filmes.add(new Filme("Invocação do mal","Terror","1:30",18, 12));
         filmes.add(new Filme("Pânico","Suspense","2:05",18, 12));
         filmes.add(new Filme("A cabana","Drama","1:50",16, 12));
         filmes.add(new Filme("Missão Impossível","Ação","2:10",12, 12));
+        filmes.add(filme2);
         filmes.add(new Filme("Homem Aranha","Ação","2:10",12, 12));
         
         clientes.add(cliente1);
