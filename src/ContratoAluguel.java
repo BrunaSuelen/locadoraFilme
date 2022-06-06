@@ -8,6 +8,11 @@ public class ContratoAluguel extends Contrato {
         super(filme, cliente);
         this.devolvido = devolvido;
     }
+    
+    public ContratoAluguel(Filme filme, Cliente cliente) {
+        super(filme, cliente);
+        this.devolvido = false;
+    }
 
     public String getDataDevolucao() {
         return sdf.format(this.dataDevolucao.toString());

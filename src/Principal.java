@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 public class Principal {
     public static String opcaoMenu;
     public static Locadora locadora = new Locadora();
@@ -16,7 +19,8 @@ public class Principal {
                 }
                 case "2": {// Listar Filmes
                     Saida.cabecalhoFuncionalidade("Listar Filmes");
-                    locadora.listarFilmes();
+                    locadora.listarFilmes(null);
+                    Saida.exibirBotoesDeAcao();
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
@@ -73,10 +77,25 @@ public class Principal {
     public static void fluxoCriarContrato(boolean ehContratoAluguel) {
         Saida.campoDeEntrada("Informe o nome do filme que deseja");
         String nomeFilmeDesejado = Entrada.recebeString();
-        int idFilme = locadora.buscarFilme(nomeFilmeDesejado);
+        ArrayList<Filme> filmes = locadora.buscarFilme(nomeFilmeDesejado);
 
-        if (idFilme != -1) {
-            Filme filme = locadora.filmes.get(idFilme);
+        if (!filmes.isEmpty()) {
+            locadora.listarFilmes(filmes);
+            boolean filmeInvalido = true;    
+            int idFilme = -1;
+            
+            do {      
+                Saida.campoDeEntrada("Informe o código do filme");  
+                idFilme = Entrada.recebeInt();
+                
+                if (idFilme >= 0 && (filmes.size() - 1) >= idFilme) {
+                    filmeInvalido = false;
+                } else {                    
+                    Saida.exibirErro("Código inválido");
+                }                       
+            } while(filmeInvalido);
+            
+            Filme filme = filmes.get(idFilme);
             filme.exibirDetalhesFilme();
 
             if (filme.getAlugado()) {
@@ -109,21 +128,22 @@ public class Principal {
         Cliente cliente = null;
         boolean clienteInvalido = true;
         locadora.listarClientes(true);
-        Saida.campoDeEntrada("Informe o código do cliente ou digite 0 para cadastrar um novo");
-        String clienteSelecionado = Entrada.recebeString();
 
         do {
+            Saida.campoDeEntrada("Informe o código do cliente ou digite 0 para cadastrar um novo");
+            String clienteSelecionado = Entrada.recebeString();
+        
             if (clienteSelecionado.equals("0")) {
                 cliente = fluxoRegistrarCliente();
                 clienteInvalido = false;
             } else {
                 int codCliente = Integer.parseInt(clienteSelecionado) - 1;
 
-                if (locadora.clientes.size() >= codCliente) {
+                if (codCliente >= 0 && (locadora.clientes.size() - 1) >= codCliente) {
                     cliente = locadora.clientes.get(codCliente);
                     clienteInvalido = false;                                
                 } else {
-                Saida.exibirErro("Código inválido");
+                    Saida.exibirErro("Código inválido");
                 }
             }                        
         } while(clienteInvalido);

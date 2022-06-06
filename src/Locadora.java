@@ -11,6 +11,7 @@ public class Locadora {
     public ArrayList<ContratoAluguel> contratosAluguel;
 
     public Locadora() {
+        this.contratosVenda = new ArrayList<>();
         this.contratosAluguel = new ArrayList<>();
         this.clientes = new ArrayList<>();
         this.filmes = new ArrayList<>();
@@ -65,10 +66,14 @@ public class Locadora {
     }
     
     /* Imprime uma tabela de filmes previamente cadastrados */
-    public void listarFilmes() {
+    public void listarFilmes(ArrayList<Filme> filmes) {
         //Imprime o cabeçalho da tabela
         System.out.print("\n  || Cod. | Nome   \t\t\t\t|   Preço   |  Locado  ||");
         Saida.linhaTabela(68);
+        
+        if (filmes == null) {
+            filmes = this.filmes;
+        }
 
         //Preenche linha da tabela com os atributos do filme
         for (int i = 0; i < filmes.size(); i++) {
@@ -89,7 +94,6 @@ public class Locadora {
         }
         
         Saida.linhaTabela(68);
-        Saida.exibirBotoesDeAcao();
     }
 
     public void listarContratosAluguel(boolean exibirApenasAtrasados) {
@@ -146,7 +150,7 @@ public class Locadora {
         }
 
         if (clientes.isEmpty()) {
-            Saida.centralizarValor("Nenhum recibo encontrado", 66, "  ||", " ");
+            Saida.centralizarValor("Nenhum contrato encontrado", 66, "  ||", " ");
         } else {
             //Preenche linha da tabela com os atributos do cliente
             for (int i = 0; i < clientes.size(); i++) {
@@ -193,14 +197,19 @@ public class Locadora {
     * 
     * @param nomeFilme: Nome do cliente que deseja encontrar
     * @return Indice que o cliente está posicionado*/
-    public int buscarFilme(String nomeFilme) {
+    public ArrayList<Filme> buscarFilme(String nomeFilme) {
+        ArrayList<Filme> filmesEncontrados = new ArrayList<>();
+        
         for (int i = 0; i < this.filmes.size(); i++) {
-            if (this.filmes.get(i).getNome().equals(nomeFilme)) {
-                return i;
+            String nomeFilmeInformado = nomeFilme.toUpperCase();
+            String nomeFilmeAtual = this.filmes.get(i).getNome().toUpperCase();
+            
+            if (nomeFilmeAtual.indexOf(nomeFilmeInformado) != -1) {
+                filmesEncontrados.add(this.filmes.get(i));
             }
         }
 
-        return -1;
+        return filmesEncontrados;
     }
 
     public ArrayList<ContratoAluguel> buscarAlugueisAtrasados() {
