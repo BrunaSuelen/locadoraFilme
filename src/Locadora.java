@@ -28,7 +28,7 @@ public class Locadora {
         contratoAluguel1.setDataRegistro(contratoAluguel1.converteStringParaData("01/06/2022"));
         contratoAluguel1.setDataDevolucao("05/06/2022");
         
-        ContratoAluguel contratoAluguel2 = new ContratoAluguel(filme2, cliente2, true);
+        ContratoAluguel contratoAluguel2 = new ContratoAluguel(filme2, cliente2, false);
         contratoAluguel2.setDataRegistro(contratoAluguel1.converteStringParaData("12/05/2022"));
         contratoAluguel2.setDataDevolucao("14/05/2022");
         
@@ -66,29 +66,33 @@ public class Locadora {
     /* Imprime uma tabela de filmes previamente cadastrados */
     public void listarFilmes(ArrayList<Filme> filmes) {
         //Imprime o cabeçalho da tabela
-        System.out.print("\n  || Cod. | Nome   \t\t\t\t|   Preço   |  Locado  ||");
+        System.out.print("\n  || Cod. | Nome   \t\t\t\t|   Preço   |  Alugado  ||");
         Saida.linhaTabela(68);
         
         if (filmes == null) {
             filmes = this.filmes;
         }
 
-        //Preenche linha da tabela com os atributos do filme
-        for (int i = 0; i < filmes.size(); i++) {
-            Filme filme = filmes.get(i);
-            System.out.print("  || " + i);
-            Saida.preencheEspacoFaltante(5, String.valueOf(i), " ");
+        if (filmes.isEmpty()) {
+            Saida.centralizarValor("Nenhum filme encontrado", 80, "  ||", " ");
+        } else {
+            //Preenche linha da tabela com os atributos do filme
+            for (int i = 0; i < filmes.size(); i++) {
+                Filme filme = filmes.get(i);
+                System.out.print("  || " + i);
+                Saida.preencheEspacoFaltante(5, String.valueOf(i), " ");
 
-            System.out.print("| " + filme.getNome());
-            Saida.preencheEspacoFaltante(36, filme.getNome(), " ");
+                System.out.print("| " + filme.getNome());
+                Saida.preencheEspacoFaltante(36, filme.getNome(), " ");
 
-            System.out.print("| " + filme.getPreco());
-            Saida.preencheEspacoFaltante(10, String.valueOf(filme.getPreco()), " ");
+                System.out.print("| " + filme.getPreco());
+                Saida.preencheEspacoFaltante(10, String.valueOf(filme.getPreco()), " ");
 
-            String statusAlugado = filme.getAlugado() ? "Sim" : "Não";
-            System.out.print("| " + statusAlugado);
-            Saida.preencheEspacoFaltante(10, statusAlugado, " ");
-            System.out.println("||");
+                String statusAlugado = filme.getAlugado() ? "Sim" : "Não";
+                System.out.print("| " + statusAlugado);
+                Saida.preencheEspacoFaltante(10, statusAlugado, " ");
+                System.out.println("||");
+            }
         }
         
         Saida.linhaTabela(68);
@@ -107,19 +111,17 @@ public class Locadora {
             System.out.print("| " + contrato.getDataDevolucao());
             Saida.preencheEspacoFaltante(16, contrato.getDataDevolucao(), " ");
             
-            String status = contrato.verificarAtrasoAlguel() ? "Atrasado" : "Em dia";
-            System.out.print("| " + status);
-            Saida.preencheEspacoFaltante(10, status, " ");            
-            
             String devolvido = contrato.isDevolvido() ? "Sim" : "Não";
             System.out.print("| " + devolvido);
             Saida.preencheEspacoFaltante(8, devolvido, " ");
             
+            String status = contrato.verificarAtrasoAlguel() ? "Atrasado" : "Em dia";
+            System.out.print("| " + status);
+            Saida.preencheEspacoFaltante(10, status, " ");  
             System.out.println("||");
         }
 
         Saida.linhaTabela(119);
-        Saida.exibirBotoesDeAcao();
     }
     
     public void listarContratosVenda() {
@@ -127,8 +129,8 @@ public class Locadora {
         System.out.print("\n  || Cod. | Nome Cliente \t| CPF \t\t | Filme     \t   | Registrado em ||");
         Saida.linhaTabela(80);
         
-         if (contratosVenda.isEmpty()) {
-            Saida.centralizarValor("Nenhum contrato encontrado", 66, "  ||", " ");
+        if (contratosVenda.isEmpty()) {
+            Saida.centralizarValor("Nenhum contrato encontrado", 80, "  ||", " ");
         } else {
              for (int i = 0; i < contratosVenda.size(); i++) {
                 Contrato contrato = contratosVenda.get(i);
@@ -159,7 +161,7 @@ public class Locadora {
         }
 
         if (clientes.isEmpty()) {
-            Saida.centralizarValor("Nenhum contrato encontrado", 66, "  ||", " ");
+            Saida.centralizarValor("Nenhum contrato encontrado", 80, "  ||", " ");
         } else {
             //Preenche linha da tabela com os atributos do cliente
             for (int i = 0; i < clientes.size(); i++) {
@@ -208,6 +210,10 @@ public class Locadora {
     * @return Indice que o cliente está posicionado*/
     public ArrayList<Filme> buscarFilme(String nomeFilme) {
         ArrayList<Filme> filmesEncontrados = new ArrayList<>();
+        
+        if (nomeFilme.equals("")) {
+            return this.filmes;
+        }
         
         for (int i = 0; i < this.filmes.size(); i++) {
             String nomeFilmeInformado = nomeFilme.toUpperCase();

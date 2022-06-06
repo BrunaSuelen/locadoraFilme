@@ -27,6 +27,7 @@ public class Principal {
                 case "3": { // Listar Filmes Atrasados
                     Saida.cabecalhoFuncionalidade("Listar Filmes Atrasados");
                     locadora.listarContratosAluguel(locadora.buscarAlugueisAtrasados());
+                    Saida.exibirBotoesDeAcao();
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
@@ -38,6 +39,8 @@ public class Principal {
                 case "5": { // Registrar Devolução
                     Saida.cabecalhoFuncionalidade("Registrar Devolução");
                     fluxoRegistrarDevolucao();
+                    Saida.exibirBotoesDeAcao();
+                    opcaoMenu = Entrada.recebeString();
                     break;
                 }
                 case "6": { // Vender Filme
@@ -53,7 +56,6 @@ public class Principal {
                 }
                 case "8": {// Listar Contratos Venda
                     Saida.cabecalhoFuncionalidade("Listar Contratos de Venda");
-                    locadora.listarContratosVenda();
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
@@ -96,13 +98,11 @@ public class Principal {
             }                       
         } while(contratoInvalido);
         
-        Saida.exibirBotoesDeAcao();
         Saida.resultadoFuncao("Devolução realizado com sucesso!");
-        opcaoMenu = Entrada.recebeString();
     }
       
     public static void fluxoCriarContrato(boolean ehContratoAluguel) {
-        Saida.campoDeEntrada("Informe o nome do filme que deseja");
+        Saida.campoDeEntrada("Informe o nome do filme que deseja (Se nada for preenchido, a lista total será exibida)");
         String nomeFilmeDesejado = Entrada.recebeString();
         ArrayList<Filme> filmes = locadora.buscarFilme(nomeFilmeDesejado);
 
@@ -130,7 +130,7 @@ public class Principal {
                 opcaoMenu = Entrada.recebeString();
 
             } else {
-                String pergunta = ehContratoAluguel ? "Deseja alugar" : "Deseja comprar";
+                String pergunta = ehContratoAluguel ? "Deseja alugar" : "Deseja vender";
                 Saida.campoDeEntrada(pergunta + "?    | Sim (Enter) |     | Não (0) |");
                 String alugarFilme = Entrada.recebeString();
 
@@ -158,13 +158,13 @@ public class Principal {
 
         do {
             Saida.campoDeEntrada("Informe o código do cliente ou digite 0 para cadastrar um novo");
-            String clienteSelecionado = Entrada.recebeString();
+            int clienteSelecionado = Entrada.recebeInt();
         
-            if (clienteSelecionado.equals("0")) {
+            if (clienteSelecionado == 0) {
                 cliente = fluxoRegistrarCliente();
                 clienteInvalido = false;
             } else {
-                int codCliente = Integer.parseInt(clienteSelecionado) - 1;
+                int codCliente = clienteSelecionado - 1;
 
                 if (codCliente >= 0 && (locadora.clientes.size() - 1) >= codCliente) {
                     cliente = locadora.clientes.get(codCliente);

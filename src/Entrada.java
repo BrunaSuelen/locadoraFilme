@@ -1,5 +1,6 @@
 
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -15,11 +16,37 @@ public class Entrada {
 	
 	/* Recebe entrada de teclado do tipo inteiro */
 	public static int recebeInt() {
-		return input.nextInt();
+            boolean entradaInvalida = true;
+            int entrada = 0;
+            
+            do {
+                try {
+                    input = new Scanner(System.in);
+                    entrada = input.nextInt();
+                    entradaInvalida = false;
+                } catch(InputMismatchException e) {
+                    System.out.print("  ** Entrada inválida, tente novamente: ");
+                }
+            } while(entradaInvalida);
+            
+            return entrada;
 	}
 	
 	/* Recebe entrada de teclado do tipo double */
 	public static double recebeDouble() {
-		return input.nextDouble();
+            boolean entradaInvalida = true;
+            double entrada = 0;
+            
+            do {
+                try {
+                    input = new Scanner(System.in);
+                    entrada = input.nextDouble();
+                    entradaInvalida = false;
+                } catch(InputMismatchException e) {
+                    System.out.print("  ** Entrada inválida, tente novamente: ");
+                }
+            } while(entradaInvalida);
+            
+            return entrada;
 	}
 }
