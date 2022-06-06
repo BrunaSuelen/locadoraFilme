@@ -18,9 +18,11 @@ public class Saida {
         System.out.println("\n");
         System.out.println("  | 1 |  Registrar Filme");
         System.out.println("  | 2 |  Listar Filmes");
-        System.out.println("  | 3 |  Alugar Filme");
-        System.out.println("  | 4 |  Listar Recibos");
-        System.out.println("  | 5 |  Listar Clientes");
+        System.out.println("  | 3 |  Listar Filmes Atrasados");
+        System.out.println("  | 4 |  Alugar Filme");
+        System.out.println("  | 5 |  Listar Recibos");
+        System.out.println("  | 6 |  Listar Clientes");
+        System.out.println("  | 7 |  Registrar Cliente");
         System.out.println("  | 0 |  Sair");
         campoDeEntrada("Digite a opção desejada");
     }

@@ -5,14 +5,13 @@ import java.util.Date;
 
 public class ContratoAluguel extends Contrato {    
     private Date dataDevolucao;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public ContratoAluguel(Filme filme, Cliente cliente) {
         super(filme, cliente);
         sdf.setLenient(false);
     }
 
-    public String getDataDevolucao() {        
+    public String getDataDevolucao() {
         return sdf.format(this.dataDevolucao.toString());
     }
 
@@ -36,16 +35,7 @@ public class ContratoAluguel extends Contrato {
         
         return 0;
     }
-    
-    private Date converteStringParaData(String dataDevolucao) {        
-        try {
-            return sdf.parse(dataDevolucao);
             
-        } catch(ParseException e) {
-            return null;
-        }
-    }
-        
     /* Verifica se a data de devolucao é menor que a data de aluguel;
     * 
     * @param dataAluguel: Data que o aluguel foi registrado
@@ -57,6 +47,13 @@ public class ContratoAluguel extends Contrato {
         
         return comparacao != 1;        
     }
+    
+    public boolean verificarAtrasoAlguel() {
+        Date dataAtual = new Date();
+        int comparacao = dataAtual.compareTo(dataDevolucao);
+        
+        return comparacao > 0;
+    } 
     
     /* Verifica se a data de devolucao é menor que a data de aluguel;
     * 

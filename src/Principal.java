@@ -11,26 +11,7 @@ public class Principal {
 
             switch (opcaoMenu) {
                 case "1": { // Registrar Filme
-                    Saida.cabecalhoFuncionalidade("Registrar Filme");
-
-                    Saida.campoDeEntrada("Nome");
-                    String nome = Entrada.recebeString();
-
-                    Saida.campoDeEntrada("Categoria");
-                    String categoria = Entrada.recebeString();
-
-                    Saida.campoDeEntrada("Duracao  (Ex: HH:mm)");
-                    String duracao = Entrada.recebeString();
-
-                    Saida.campoDeEntrada("Preço");
-                    double preco = Entrada.recebeDouble();
-
-                    Saida.campoDeEntrada("Classificação Indicativa");
-                    int classificacao = Entrada.recebeInt();
-
-                    locadora.cadastrarFilme(new Filme(nome, categoria, duracao, preco, classificacao));
-                    Saida.resultadoFuncao("Cadastro realizado com sucesso!");
-                    opcaoMenu = Entrada.recebeString();
+                    fluxoRegistrarFilme();
                     break;
 
                 }
@@ -40,22 +21,35 @@ public class Principal {
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
-                case "3": { // Alugar Filme
-                    alugarFilme();
-                    break;
-                }
-                case "4": {// Listar Recibos
-                    Saida.cabecalhoFuncionalidade("Listar Recibos");
-                    locadora.listarContratosAluguel();
+                case "3": { // Listar Filmes Atrasados
+                    Saida.cabecalhoFuncionalidade("Listar Filmes Atrasados");
+                    locadora.listarContratosAluguel(true);
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
-                case "5": {// Listar Clientes
+                case "4": { // Alugar Filme
+                    fluxoAlugarFilme();
+                    break;
+                }
+                case "5": {// Listar Contratos Aluguel
+                    Saida.cabecalhoFuncionalidade("Listar Recibos");
+                    locadora.listarContratosAluguel(false);
+                    opcaoMenu = Entrada.recebeString();
+                    break;
+                }
+                case "6": {// Listar Clientes
                     Saida.cabecalhoFuncionalidade("Listar Clientes");
                     locadora.listarClientes(false);
                     Saida.exibirBotoesDeAcao();
                     opcaoMenu = Entrada.recebeString();
                     break;
+                }
+                case "7": { // Registrar Cliente
+                    fluxoRegistrarCliente();
+                    Saida.resultadoFuncao("Cadastro realizado com sucesso!");
+                    opcaoMenu = Entrada.recebeString();
+                    break;
+
                 }
             }
 
@@ -65,7 +59,7 @@ public class Principal {
         System.exit(0);
     }
     
-    public static void alugarFilme() {
+    public static void fluxoAlugarFilme() {
         Saida.cabecalhoFuncionalidade("Buscar Filme");
         Saida.campoDeEntrada("Informe o nome do filme que deseja");
         String nomeFilmeDesejado = Entrada.recebeString();
@@ -92,18 +86,7 @@ public class Principal {
 
                     do {
                         if (clienteSelecionado.equals("0")) {
-                            System.out.println("\n\n  |  Preencha o formulário do Cliente  |");
-                            Saida.campoDeEntrada("Nome do Cliente");
-                            String nomeCliente = Entrada.recebeString();
-
-                            Saida.campoDeEntrada("CPF");
-                            String cpf = Entrada.recebeString();
-
-                            Saida.campoDeEntrada("Telefone");
-                            String telefone = Entrada.recebeString();
-
-                            cliente = new Cliente(nomeCliente, cpf, telefone);
-                            locadora.cadastrarCliente(cliente);
+                            cliente = fluxoRegistrarCliente();
                             clienteInvalido = false;
                         } else {
                             int codCliente = Integer.parseInt(clienteSelecionado) - 1;
@@ -142,5 +125,45 @@ public class Principal {
             Saida.resultadoFuncao("Infelizmente, não encontramos o filme :(");
             opcaoMenu = Entrada.recebeString();
         }
+    }
+    
+    public static void fluxoRegistrarFilme() {
+        Saida.cabecalhoFuncionalidade("Registrar Filme");
+
+        Saida.campoDeEntrada("Nome");
+        String nome = Entrada.recebeString();
+
+        Saida.campoDeEntrada("Categoria");
+        String categoria = Entrada.recebeString();
+
+        Saida.campoDeEntrada("Duracao  (Ex: HH:mm)");
+        String duracao = Entrada.recebeString();
+
+        Saida.campoDeEntrada("Preço");
+        double preco = Entrada.recebeDouble();
+
+        Saida.campoDeEntrada("Classificação Indicativa");
+        int classificacao = Entrada.recebeInt();
+
+        locadora.cadastrarFilme(new Filme(nome, categoria, duracao, preco, classificacao));
+        Saida.resultadoFuncao("Cadastro realizado com sucesso!");
+        opcaoMenu = Entrada.recebeString();
+    }
+
+    public static Cliente fluxoRegistrarCliente() {
+        System.out.println("\n\n  |  Preencha o formulário do Cliente  |");
+        Saida.campoDeEntrada("Nome do Cliente");
+        String nomeCliente = Entrada.recebeString();
+
+        Saida.campoDeEntrada("CPF");
+        String cpf = Entrada.recebeString();
+
+        Saida.campoDeEntrada("Telefone");
+        String telefone = Entrada.recebeString();
+
+        Cliente cliente = new Cliente(nomeCliente, cpf, telefone);
+        locadora.cadastrarCliente(cliente);
+        
+        return cliente;
     }
 }

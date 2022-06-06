@@ -7,10 +7,10 @@ public class Locadora {
 
     public ArrayList<Filme> filmes;
     public ArrayList<Cliente> clientes;
-    public ArrayList<Contrato> contratos;
+    public ArrayList<ContratoAluguel> contratosAluguel;
 
     public Locadora() {
-        this.contratos = new ArrayList<>();
+        this.contratosAluguel = new ArrayList<>();
         this.clientes = new ArrayList<>();
         this.filmes = new ArrayList<>();
         this.gerarFilmes();
@@ -70,36 +70,24 @@ public class Locadora {
         Saida.exibirBotoesDeAcao();
     }
 
-    /* Imprime uma tabela de contratos previamente cadastrados */
-    public void listarContratosAluguel() {
+    public void listarContratosAluguel(boolean exibirApenasAtrasados) {
         //Imprime o cabeçalho da tabela
-        System.out.print("\n  || Cod. | Nome Cliente   \t\t|   Locação em   |  Devolução em  ||");
-        Saida.linhaTabela(70);
-
-        if (contratos.isEmpty()) {
-            Saida.centralizarValor("Nenhum recibo encontrado", 68, "  ||", " ");
-
-        } else {
-            //Preenche linha da tabela com os atributos do contrato
-//            for (int i = 0; i < contratos.size(); i++) {
-//                Contrato contrato = contratos.get(i);
-//                System.out.print("  || " + i);
-//                Saida.preencheEspacoFaltante(5, String.valueOf(i), " ");
-//
-//                System.out.print("| " + contrato.getCliente());
-//                Saida.preencheEspacoFaltante(28, contratos.get(i).getCliente(), " ");
-//
-//                System.out.print("| " + contrato.getDataLocacao());
-//                Saida.preencheEspacoFaltante(15, String.valueOf(contrato.getDataLocacao()), " ");
-//
-//                System.out.print("| " + contrato.getDataDevolucao());
-//                Saida.preencheEspacoFaltante(15, String.valueOf(contrato.getDataDevolucao()), " ");
-//
-//                System.out.print("||");
-//            }
+        System.out.print("\n  || Cod. | Nome Cliente \t| CPF       | Filme \t| Registrado em | Devolução em |  Status  ||");
+        Saida.linhaTabela(80);
+        
+        ArrayList<ContratoAluguel> contratos = exibirApenasAtrasados ? buscarAlugueisAtrasados() : contratosAluguel;
+        for (int i = 0; i < contratos.size(); i++) {
+            ContratoAluguel contrato = contratos.get(i);
+            contrato.exibirContratoParaTabela(i);
+        
+            System.out.print("| " + contrato.getDataDevolucao());
+            Saida.preencheEspacoFaltante(15, contrato.getDataDevolucao(), " ");
+            
+            String status = contrato.verificarAtrasoAlguel() ? "Atrasado" : "Em dia";
+            System.out.print("||");
         }
 
-        Saida.linhaTabela(70);
+        Saida.linhaTabela(80);
         Saida.exibirBotoesDeAcao();
     }
     
@@ -142,19 +130,15 @@ public class Locadora {
         
         Saida.linhaTabela(68);
     }
-    
-    public void listarAlugueisAtrasados() {
         
-    }
-    
     /* Realiza o processo de aluguel do cliente.
-    * Adicionado o contrato enviado ao arrayList de contratos e altera status de aluguel do cliente
+    * Adicionado o contrato enviado ao arrayList de contratosAluguel e altera status de aluguel do cliente
     * 
     * @param contrato: Objeto contrato já instânciado
     * @param idFilme: Indice de posicionamento do cliente no arrayList*/
-    public void alugarFilme(Contrato contrato, int idFilme) {
+    public void alugarFilme(ContratoAluguel contrato, int idFilme) {
         this.filmes.get(idFilme).setAlugado(true);
-        this.contratos.add(contrato);
+        this.contratosAluguel.add(contrato);
     }
 
     /* Busca dentro do arrayList de filmes o objeto que possui o mesmo nome passado pelo parâmetro 
@@ -169,5 +153,18 @@ public class Locadora {
         }
 
         return -1;
+    }
+
+    public ArrayList<ContratoAluguel> buscarAlugueisAtrasados() {
+        ArrayList<ContratoAluguel> alugueisAtrasados = new ArrayList<>();
+        
+        for (int i = 0; i < contratosAluguel.size(); i++) {
+            ContratoAluguel contrato = contratosAluguel.get(i);
+            if (contrato.verificarAtrasoAlguel()) {
+                alugueisAtrasados.add(contrato);
+            }
+        }
+        
+        return alugueisAtrasados;
     }
 }
