@@ -13,7 +13,7 @@ public class Contrato {
     public Contrato(Filme filme, Cliente cliente) {
         this.filme = filme;
         this.cliente = cliente;
-        this.setDataRegistro();
+        this.dataRegistro = new Date();
     }
 
     public Filme getFilme() {
@@ -36,8 +36,8 @@ public class Contrato {
         return sdf.format(this.dataRegistro.toString());
     }
 
-    private void setDataRegistro() {
-        this.dataRegistro = new Date();
+    public void setDataRegistro(Date dataRegistro) {
+        this.dataRegistro = dataRegistro;
     }
     
     public void exibirContratoParaTabela(int codContrato) {

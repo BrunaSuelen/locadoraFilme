@@ -13,6 +13,15 @@ public class Filme {
         this.classificacaoIndicativa = classificacaoIndicativa;
         this.alugado = false;
     }
+    
+    public Filme(String nome, String categoria, String duracao, double preco, int classificacaoIndicativa, boolean alugado) {
+        this.nome = nome;
+        this.categoria = categoria;
+        this.duracao = duracao;
+        this.preco = preco;
+        this.classificacaoIndicativa = classificacaoIndicativa;
+        this.alugado = alugado;
+    }
 
     public String getNome() {
         return nome;

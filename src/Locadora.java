@@ -7,25 +7,47 @@ public class Locadora {
 
     public ArrayList<Filme> filmes;
     public ArrayList<Cliente> clientes;
+    public ArrayList<Contrato> contratosVenda;
     public ArrayList<ContratoAluguel> contratosAluguel;
 
     public Locadora() {
         this.contratosAluguel = new ArrayList<>();
         this.clientes = new ArrayList<>();
         this.filmes = new ArrayList<>();
-        this.gerarFilmes();
+        this.gerarDados();
     }
 
     /* Cadastra automáticamente 8 objetos para a classe cliente */
-    public final void gerarFilmes() {
-        filmes.add(new Filme("Alita","Ação","2:30",14, 12));
-        filmes.add(new Filme("Gente Grande","Comedia","2:00",10, 12));
-        filmes.add(new Filme("Invocação do mal","Terror","1:30",18, 12));
+    public final void gerarDados() {
+        Filme filme1 = new Filme("Alita","Ação","2:30",14, 12, true);
+        Filme filme2 = new Filme("Gente Grande","Comedia","2:00",10, 12, true);
+        
+        Cliente cliente1 = new Cliente("Rogério","789.789.879-87","98845-4545");
+        Cliente cliente2 = new Cliente("Beatriz","545.022.112-01","98475-9874");
+        
+        ContratoAluguel contratoAluguel1 = new ContratoAluguel(filme1, cliente1, false);
+        contratoAluguel1.setDataRegistro(contratoAluguel1.converteStringParaData("01/06/2022"));
+        contratoAluguel1.setDataDevolucao("05/06/2022");
+        
+        ContratoAluguel contratoAluguel2 = new ContratoAluguel(filme2, cliente2, true);
+        contratoAluguel2.setDataRegistro(contratoAluguel1.converteStringParaData("12/05/2022"));
+        contratoAluguel1.setDataDevolucao("14/05/2022");
+        
+        
+        filmes.add(filme1);
+        filmes.add(filme2);
         filmes.add(new Filme("Barraca do beijo","Romance","2:56",14, 12));
+        filmes.add(new Filme("Invocação do mal","Terror","1:30",18, 12));
         filmes.add(new Filme("Pânico","Suspense","2:05",18, 12));
         filmes.add(new Filme("A cabana","Drama","1:50",16, 12));
         filmes.add(new Filme("Missão Impossível","Ação","2:10",12, 12));
         filmes.add(new Filme("Homem Aranha","Ação","2:10",12, 12));
+        
+        clientes.add(cliente1);
+        clientes.add(cliente2);
+        
+        contratosAluguel.add(contratoAluguel1);
+        contratosAluguel.add(contratoAluguel2);
     }
         
     /* Adiciona o filme enviado ao arrayList de filmes 
@@ -51,7 +73,7 @@ public class Locadora {
         //Preenche linha da tabela com os atributos do filme
         for (int i = 0; i < filmes.size(); i++) {
             Filme filme = filmes.get(i);
-            System.out.print("  || " + i+1);
+            System.out.print("  || " + i);
             Saida.preencheEspacoFaltante(5, String.valueOf(i), " ");
 
             System.out.print("| " + filme.getNome());
@@ -84,6 +106,22 @@ public class Locadora {
             Saida.preencheEspacoFaltante(15, contrato.getDataDevolucao(), " ");
             
             String status = contrato.verificarAtrasoAlguel() ? "Atrasado" : "Em dia";
+            System.out.print("||");
+        }
+
+        Saida.linhaTabela(80);
+        Saida.exibirBotoesDeAcao();
+    }
+    
+    public void listarContratosVenda() {
+        //Imprime o cabeçalho da tabela
+        System.out.print("\n  || Cod. | Nome Cliente \t| CPF       | Filme \t| Registrado em ||");
+        Saida.linhaTabela(80);
+        
+        for (int i = 0; i < contratosVenda.size(); i++) {
+            Contrato contrato = contratosVenda.get(i);
+            contrato.exibirContratoParaTabela(i);
+            
             System.out.print("||");
         }
 
@@ -139,6 +177,16 @@ public class Locadora {
     public void alugarFilme(ContratoAluguel contrato, int idFilme) {
         this.filmes.get(idFilme).setAlugado(true);
         this.contratosAluguel.add(contrato);
+    }
+    
+     /* Realiza o processo de aluguel do cliente.
+    * Adicionado o contrato enviado ao arrayList de contratosAluguel e altera status de aluguel do cliente
+    * 
+    * @param contrato: Objeto contrato já instânciado
+    * @param idFilme: Indice de posicionamento do cliente no arrayList*/
+    public void venderFilme(Contrato contrato, int idFilme) {
+        this.contratosVenda.add(contrato);
+        this.filmes.remove(idFilme);
     }
 
     /* Busca dentro do arrayList de filmes o objeto que possui o mesmo nome passado pelo parâmetro 

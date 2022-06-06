@@ -20,9 +20,11 @@ public class Saida {
         System.out.println("  | 2 |  Listar Filmes");
         System.out.println("  | 3 |  Listar Filmes Atrasados");
         System.out.println("  | 4 |  Alugar Filme");
-        System.out.println("  | 5 |  Listar Recibos");
-        System.out.println("  | 6 |  Listar Clientes");
-        System.out.println("  | 7 |  Registrar Cliente");
+        System.out.println("  | 5 |  Vender Filme");
+        System.out.println("  | 6 |  Listar Contrato de Aluguel");
+        System.out.println("  | 7 |  Listar Contrato de Venda");
+        System.out.println("  | 8 |  Listar Clientes");
+        System.out.println("  | 9 |  Registrar Cliente");
         System.out.println("  | 0 |  Sair");
         campoDeEntrada("Digite a opção desejada");
     }

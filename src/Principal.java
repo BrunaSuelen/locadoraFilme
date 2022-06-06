@@ -13,7 +13,6 @@ public class Principal {
                 case "1": { // Registrar Filme
                     fluxoRegistrarFilme();
                     break;
-
                 }
                 case "2": {// Listar Filmes
                     Saida.cabecalhoFuncionalidade("Listar Filmes");
@@ -28,23 +27,35 @@ public class Principal {
                     break;
                 }
                 case "4": { // Alugar Filme
-                    fluxoAlugarFilme();
+                    Saida.cabecalhoFuncionalidade("Alugar Filme");
+                    fluxoCriarContrato(true);
                     break;
                 }
-                case "5": {// Listar Contratos Aluguel
-                    Saida.cabecalhoFuncionalidade("Listar Recibos");
+                case "5": { // Vender Filme
+                    Saida.cabecalhoFuncionalidade("Vender Filme");
+                    fluxoCriarContrato(false);
+                    break;
+                }
+                case "6": {// Listar Contratos Aluguel
+                    Saida.cabecalhoFuncionalidade("Listar Contratos Aluguel");
                     locadora.listarContratosAluguel(false);
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
-                case "6": {// Listar Clientes
+                case "7": {// Listar Contratos Venda
+                    Saida.cabecalhoFuncionalidade("Listar Contratos de Venda");
+                    locadora.listarContratosVenda();
+                    opcaoMenu = Entrada.recebeString();
+                    break;
+                }
+                case "8": {// Listar Clientes
                     Saida.cabecalhoFuncionalidade("Listar Clientes");
                     locadora.listarClientes(false);
                     Saida.exibirBotoesDeAcao();
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
-                case "7": { // Registrar Cliente
+                case "9": { // Registrar Cliente
                     fluxoRegistrarCliente();
                     Saida.resultadoFuncao("Cadastro realizado com sucesso!");
                     opcaoMenu = Entrada.recebeString();
@@ -58,9 +69,8 @@ public class Principal {
 
         System.exit(0);
     }
-    
-    public static void fluxoAlugarFilme() {
-        Saida.cabecalhoFuncionalidade("Buscar Filme");
+      
+    public static void fluxoCriarContrato(boolean ehContratoAluguel) {
         Saida.campoDeEntrada("Informe o nome do filme que deseja");
         String nomeFilmeDesejado = Entrada.recebeString();
         int idFilme = locadora.buscarFilme(nomeFilmeDesejado);
@@ -74,50 +84,18 @@ public class Principal {
                 opcaoMenu = Entrada.recebeString();
 
             } else {
-                Saida.campoDeEntrada("Deseja alugar?    | Sim (Enter) |     | Não (0) |");
+                String pergunta = ehContratoAluguel ? "Deseja alugar" : "Deseja comprar";
+                Saida.campoDeEntrada(pergunta + "?    | Sim (Enter) |     | Não (0) |");
                 String alugarFilme = Entrada.recebeString();
 
                 if (!alugarFilme.equals("0")) {
-                    Cliente cliente = null;
-                    boolean clienteInvalido = true;
-                    locadora.listarClientes(true);
-                    Saida.campoDeEntrada("Informe o código do cliente ou digite 0 para cadastrar um novo");
-                    String clienteSelecionado = Entrada.recebeString();
-
-                    do {
-                        if (clienteSelecionado.equals("0")) {
-                            cliente = fluxoRegistrarCliente();
-                            clienteInvalido = false;
-                        } else {
-                            int codCliente = Integer.parseInt(clienteSelecionado) - 1;
-                                
-                            if (locadora.clientes.size() >= codCliente) {
-                                cliente = locadora.clientes.get(codCliente);
-                                clienteInvalido = false;                                
-                            } else {
-                            Saida.exibirErro("Código inválido");
-                            }
-                        }                        
-                    } while(clienteInvalido);
-
-                    boolean dataInvalida = true;
-                    ContratoAluguel contrato = new ContratoAluguel(filme, cliente);
-                    System.out.println("\n  |  Preencha o formulário de Aluguel  |");
-
-                    do {
-                        Saida.campoDeEntrada("Data de Devolução (Ex: dd/mm/aaaa)");
-                        String dataDevolucao = Entrada.recebeString();
-                        int erro = contrato.setDataDevolucao(dataDevolucao);
-
-                        if (erro != 0) {
-                            Saida.exibirErro(contrato.mensagemErroValidacaoDataDevolucao(erro));
-                        } else {
-                            dataInvalida = false;
-                        }
-                    } while(dataInvalida);
-                    
-                    locadora.alugarFilme(contrato, idFilme);
-                    Saida.resultadoFuncao("Filme alugado com sucesso!");
+                    Cliente cliente = fluxoBuscarClienteParaContrato();
+                    if (ehContratoAluguel) {
+                        fluxoAlugarFilme(idFilme, filme, cliente);
+                    } else {
+                        fluxoVenderFilme(idFilme, filme, cliente);
+                    }
+                    Saida.resultadoFuncao("Execução realizada com sucesso!");
                     opcaoMenu = Entrada.recebeString();
                 }
             }
@@ -127,6 +105,57 @@ public class Principal {
         }
     }
     
+    public static Cliente fluxoBuscarClienteParaContrato() {
+        Cliente cliente = null;
+        boolean clienteInvalido = true;
+        locadora.listarClientes(true);
+        Saida.campoDeEntrada("Informe o código do cliente ou digite 0 para cadastrar um novo");
+        String clienteSelecionado = Entrada.recebeString();
+
+        do {
+            if (clienteSelecionado.equals("0")) {
+                cliente = fluxoRegistrarCliente();
+                clienteInvalido = false;
+            } else {
+                int codCliente = Integer.parseInt(clienteSelecionado) - 1;
+
+                if (locadora.clientes.size() >= codCliente) {
+                    cliente = locadora.clientes.get(codCliente);
+                    clienteInvalido = false;                                
+                } else {
+                Saida.exibirErro("Código inválido");
+                }
+            }                        
+        } while(clienteInvalido);
+        
+        return cliente;
+    }
+    
+    public static void fluxoAlugarFilme(int idFilme, Filme filme, Cliente cliente) {
+        boolean dataInvalida = true;
+        ContratoAluguel contrato = new ContratoAluguel(filme, cliente);
+        System.out.println("\n  |  Preencha o formulário de Aluguel  |");
+
+        do {
+            Saida.campoDeEntrada("Data de Devolução (Ex: dd/mm/aaaa)");
+            String dataDevolucao = Entrada.recebeString();
+            int erro = contrato.setDataDevolucao(dataDevolucao);
+
+            if (erro != 0) {
+                Saida.exibirErro(contrato.mensagemErroValidacaoDataDevolucao(erro));
+            } else {
+                dataInvalida = false;
+            }
+        } while(dataInvalida);
+
+        locadora.alugarFilme(contrato, idFilme);
+    }
+    
+    public static void fluxoVenderFilme(int idFilme, Filme filme, Cliente cliente) {
+        ContratoAluguel contrato = new ContratoAluguel(filme, cliente);        
+        locadora.venderFilme(contrato, idFilme);
+    }
+       
     public static void fluxoRegistrarFilme() {
         Saida.cabecalhoFuncionalidade("Registrar Filme");
 

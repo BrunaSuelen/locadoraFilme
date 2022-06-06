@@ -1,18 +1,24 @@
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ContratoAluguel extends Contrato {    
     private Date dataDevolucao;
+    private boolean devolvido;
 
-    public ContratoAluguel(Filme filme, Cliente cliente) {
+    public ContratoAluguel(Filme filme, Cliente cliente, boolean devolvido) {
         super(filme, cliente);
-        sdf.setLenient(false);
+        this.devolvido = devolvido;
     }
 
     public String getDataDevolucao() {
         return sdf.format(this.dataDevolucao.toString());
+    }
+
+    public boolean isDevolvido() {
+        return devolvido;
+    }
+
+    public void setDevolvido(boolean devolvido) {
+        this.devolvido = devolvido;
     }
 
     /* Verifica se a data de devolucao é menor que a data de aluguel;
@@ -52,7 +58,7 @@ public class ContratoAluguel extends Contrato {
         Date dataAtual = new Date();
         int comparacao = dataAtual.compareTo(dataDevolucao);
         
-        return comparacao > 0;
+        return comparacao > 0 && !devolvido;
     } 
     
     /* Verifica se a data de devolucao é menor que a data de aluguel;
