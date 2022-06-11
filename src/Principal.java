@@ -39,7 +39,6 @@ public class Principal {
                 case "5": { // Registrar Devolução
                     Saida.cabecalhoFuncionalidade("Registrar Devolução");
                     fluxoRegistrarDevolucao();
-                    Saida.exibirBotoesDeAcao();
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
@@ -51,11 +50,13 @@ public class Principal {
                 case "7": {// Listar Contratos Aluguel
                     Saida.cabecalhoFuncionalidade("Listar Contratos Aluguel");
                     locadora.listarContratosAluguel(locadora.contratosAluguel);
+                    Saida.exibirBotoesDeAcao();
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
                 case "8": {// Listar Contratos Venda
                     Saida.cabecalhoFuncionalidade("Listar Contratos de Venda");
+                    locadora.listarContratosVenda();
                     opcaoMenu = Entrada.recebeString();
                     break;
                 }
@@ -179,22 +180,28 @@ public class Principal {
     }
     
     public static void fluxoAlugarFilme(int idFilme, Filme filme, Cliente cliente) {
-        boolean dataInvalida = true;
         ContratoAluguel contrato = new ContratoAluguel(filme, cliente);
-        System.out.println("\n  |  Preencha o formulário de Aluguel  |");
+        System.out.print("\n      Data de devolução prevista para: "+ contrato.getDataDevolucao());
+        
+        Saida.campoDeEntrada("Deseja adicionar tempo extra? DIA/R$ "+ filme.getPrecoDiaExtra() +"    | Sim (Enter) |     | Não (0) |");
+        opcaoMenu = Entrada.recebeString();
+        
+        if (!opcaoMenu.equals("0")) {
+            boolean tempoExtraInvalido = true;
+            do {
+                Saida.campoDeEntrada("Informe a quantidade de dias à mais desejada");
+                int tempoExtra = Entrada.recebeInt();
 
-        do {
-            Saida.campoDeEntrada("Data de Devolução (Ex: dd/mm/aaaa)");
-            String dataDevolucao = Entrada.recebeString();
-            int erro = contrato.setDataDevolucao(dataDevolucao);
-
-            if (erro != 0) {
-                Saida.exibirErro(contrato.mensagemErroValidacaoDataDevolucao(erro));
-            } else {
-                dataInvalida = false;
-            }
-        } while(dataInvalida);
-
+                if (tempoExtra > 1) {
+                    tempoExtraInvalido = false;
+                    contrato.adicionarTempoExtra(tempoExtra);
+                } else {
+                    Saida.exibirErro("Informe um número maior que 0");
+                }
+            } while(tempoExtraInvalido);
+        }
+        
+        contrato.exibirDetalhesContratoAluguel();
         locadora.alugarFilme(contrato, idFilme);
     }
     
@@ -218,10 +225,16 @@ public class Principal {
         Saida.campoDeEntrada("Preço");
         double preco = Entrada.recebeDouble();
 
+        Saida.campoDeEntrada("Preço por dia Extra");
+        double precoDiaExtra = Entrada.recebeDouble();
+
         Saida.campoDeEntrada("Classificação Indicativa");
         int classificacao = Entrada.recebeInt();
 
-        locadora.cadastrarFilme(new Filme(nome, categoria, duracao, preco, classificacao));
+        Saida.campoDeEntrada("Tempo de Aluguel");
+        int tempoAluguel = Entrada.recebeInt();
+
+        locadora.cadastrarFilme(new Filme(nome, categoria, duracao, preco, precoDiaExtra, classificacao, tempoAluguel));
         Saida.resultadoFuncao("Cadastro realizado com sucesso!");
         opcaoMenu = Entrada.recebeString();
     }
@@ -232,14 +245,15 @@ public class Principal {
         String nomeCliente = Entrada.recebeString();
         Cliente cliente = new Cliente(nomeCliente);
         boolean cpfInvalido = true;
+        boolean telefoneInvalido = true;
         
         do {
-            Saida.campoDeEntrada("CPF (Ex. XXX.XXX.XXX-XX");
+            Saida.campoDeEntrada("CPF (Ex. XXX.XXX.XXX-XX)");
             String cpf = Entrada.recebeString();
             
             if (cliente.validarCPF(cpf) != null) {
+                cliente.setCpf(cpf);
                 cpfInvalido = false;
-                System.out.print(cpf);
             } else {
                 Saida.exibirErro("CPF inválido, tente novamente");
             }
@@ -250,11 +264,12 @@ public class Principal {
             String telefone = Entrada.recebeString();
             
             if (cliente.validarTelefone(telefone) != null) {
-                cpfInvalido = false;
+                telefoneInvalido = false;
+                cliente.setTelefone(telefone);
             } else {
                 Saida.exibirErro("Telefone inválido, tente novamente");
             }
-        } while(cpfInvalido);
+        } while(telefoneInvalido);
 
         locadora.cadastrarCliente(cliente);
         

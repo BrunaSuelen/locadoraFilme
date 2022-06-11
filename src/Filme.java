@@ -2,24 +2,30 @@ public class Filme {
 
     private String nome, categoria, duracao;
     private double preco;
+    private double precoDiaExtra;
     private int classificacaoIndicativa;
     private boolean alugado;
+    private int tempoAluguel;
 
-    public Filme(String nome, String categoria, String duracao, double preco, int classificacaoIndicativa) {
+    public Filme(String nome, String categoria, String duracao, double preco, double precoDiaExtra, int classificacaoIndicativa, int tempoAluguel) {
         this.nome = nome;
         this.categoria = categoria;
         this.duracao = duracao;
         this.preco = preco;
+        this.precoDiaExtra = precoDiaExtra;
         this.classificacaoIndicativa = classificacaoIndicativa;
+        this.tempoAluguel = tempoAluguel;
         this.alugado = false;
     }
     
-    public Filme(String nome, String categoria, String duracao, double preco, int classificacaoIndicativa, boolean alugado) {
+    public Filme(String nome, String categoria, String duracao, double preco,double precoDiaExtra, int classificacaoIndicativa, boolean alugado,  int tempoAluguel) {
         this.nome = nome;
         this.categoria = categoria;
         this.duracao = duracao;
         this.preco = preco;
+        this.precoDiaExtra = precoDiaExtra;
         this.classificacaoIndicativa = classificacaoIndicativa;
+        this.tempoAluguel = tempoAluguel;
         this.alugado = alugado;
     }
 
@@ -63,6 +69,14 @@ public class Filme {
         this.classificacaoIndicativa = classificacaoIndicativa;
     }
 
+    public int getTempoAluguel() {
+        return tempoAluguel;
+    }
+
+    public void setTempoAluguel(int tempoAluguel) {
+        this.tempoAluguel = tempoAluguel;
+    }
+
     public boolean getAlugado() {
         return alugado;
     }
@@ -71,6 +85,14 @@ public class Filme {
         this.alugado = alugado;
     }
 
+    public double getPrecoDiaExtra() {
+        return precoDiaExtra;
+    }
+
+    public void setPrecoDiaExtra(double precoDiaExtra) {
+        this.precoDiaExtra = precoDiaExtra;
+    }
+  
     /* Imprime detalhes do filme */
     public void exibirDetalhesFilme() {
         System.out.print("\n  ");
@@ -85,6 +107,8 @@ public class Filme {
         Saida.exibirAtributoDetalhesObjeto("Duração", this.duracao);
         Saida.exibirAtributoDetalhesObjeto("Preço", String.valueOf(this.preco));
         Saida.exibirAtributoDetalhesObjeto("Classificação", String.valueOf(this.classificacaoIndicativa));
+        Saida.exibirAtributoDetalhesObjeto("Tempo de Aluguel", String.valueOf(this.tempoAluguel));
+        Saida.exibirAtributoDetalhesObjeto("Taxa dia Adicional", "R$ " +String.valueOf(this.precoDiaExtra));
         Saida.exibirAtributoDetalhesObjeto("Alugado", this.alugado ? "Sim" : "Não");
 
         Saida.pularLinhaTabela(50);

@@ -18,29 +18,27 @@ public class Locadora {
 
     /* Cadastra automáticamente alguns objetos */
     public final void gerarDados() {
-        Filme filme1 = new Filme("Alita","Ação","2:30",14, 12, true);
-        Filme filme2 = new Filme("Gente Grande","Comedia","2:00",10, 12, true);
+        Filme filme1 = new Filme("Alita","Ação","2:30",14.90, 5.00, 12, true, 2);
+        Filme filme2 = new Filme("Gente Grande","Comedia","2:00",10.50, 2.90, 12, true, 3);
         
         Cliente cliente1 = new Cliente("Rogério","789.789.879-87","98845-4545");
         Cliente cliente2 = new Cliente("Beatriz","545.022.112-01","98475-9874");
         
         ContratoAluguel contratoAluguel1 = new ContratoAluguel(filme1, cliente1, false);
         contratoAluguel1.setDataRegistro(contratoAluguel1.converteStringParaData("01/06/2022"));
-        //contratoAluguel1.setDataDevolucao("05/06/2022");
         
         ContratoAluguel contratoAluguel2 = new ContratoAluguel(filme2, cliente2, false);
         contratoAluguel2.setDataRegistro(contratoAluguel1.converteStringParaData("12/05/2022"));
-        //contratoAluguel2.setDataDevolucao("14/05/2022");
         
         
         filmes.add(filme1);
-        filmes.add(new Filme("Barraca do beijo","Romance","2:56",14, 12));
-        filmes.add(new Filme("Invocação do mal","Terror","1:30",18, 12));
-        filmes.add(new Filme("Pânico","Suspense","2:05",18, 12));
-        filmes.add(new Filme("A cabana","Drama","1:50",16, 12));
-        filmes.add(new Filme("Missão Impossível","Ação","2:10",12, 12));
+        filmes.add(new Filme("Barraca do beijo","Romance","2:56",14.00, 5.00, 12, 2));
+        filmes.add(new Filme("Invocação do mal","Terror","1:30",18.00, 3.00, 12, 3));
+        filmes.add(new Filme("Pânico","Suspense","2:05",18.00, 3.00, 12, 3));
+        filmes.add(new Filme("A cabana","Drama","1:50",16.00, 3.00, 12, 4));
+        filmes.add(new Filme("Missão Impossível","Ação","2:10",12.00, 4.00, 12, 5));
         filmes.add(filme2);
-        filmes.add(new Filme("Homem Aranha","Ação","2:10",12, 12));
+        filmes.add(new Filme("Homem Aranha","Ação","2:10",20, 5.00, 12, 2));
         
         clientes.add(cliente1);
         clientes.add(cliente2);
@@ -101,25 +99,31 @@ public class Locadora {
     /* Imprime uma tabela de contratos de alguel previamente cadastrados */
     public void listarContratosAluguel(ArrayList<ContratoAluguel> contratos) {
         //Imprime o cabeçalho da tabela
-        System.out.print("\n  || Cod. | Cliente \t\t| CPF  \t");
+        Saida.linhaTabela(119);
+        System.out.print("  || Cod. | Cliente \t\t| CPF  \t");
         System.out.print("\t | Filme \t   | Registrado em   | Devolução em   | Devolvido |  Status  ||");
         Saida.linhaTabela(119);
         
-        for (int i = 0; i < contratos.size(); i++) {
-            ContratoAluguel contrato = contratos.get(i);
-            contrato.exibirContratoParaTabela(i);
-        
-            System.out.print("| " + contrato.getDataDevolucao());
-            Saida.preencheEspacoFaltante(16, contrato.getDataDevolucao(), " ");
-            
-            String devolvido = contrato.isDevolvido() ? "Sim" : "Não";
-            System.out.print("| " + devolvido);
-            Saida.preencheEspacoFaltante(8, devolvido, " ");
-            
-            String status = contrato.verificarAtrasoAlguel() ? "Atrasado" : "Em dia";
-            System.out.print("| " + status);
-            Saida.preencheEspacoFaltante(10, status, " ");  
-            System.out.println("||");
+        if (contratos.isEmpty()) {
+            Saida.centralizarValor("Nenhum filme encontrado", 117, "  ||", " ");
+        } else {
+            //Preenche linha da tabela com os atributos do filme
+            for (int i = 0; i < contratos.size(); i++) {
+                ContratoAluguel contrato = contratos.get(i);
+                contrato.exibirContratoParaTabela(i);
+
+                System.out.print("| " + contrato.getDataDevolucao());
+                Saida.preencheEspacoFaltante(16, contrato.getDataDevolucao(), " ");
+
+                String devolvido = contrato.isDevolvido() ? "Sim" : "Não";
+                System.out.print("| " + devolvido);
+                Saida.preencheEspacoFaltante(8, devolvido, " ");
+
+                String status = contrato.verificarAtrasoAlguel() ? "Atrasado" : "Em dia";
+                System.out.print("| " + status);
+                Saida.preencheEspacoFaltante(10, status, " ");  
+                System.out.println("||");
+            }
         }
 
         Saida.linhaTabela(119);
@@ -128,11 +132,12 @@ public class Locadora {
     /* Imprime uma tabela de contratos de venda previamente cadastrados */
     public void listarContratosVenda() {
         //Imprime o cabeçalho da tabela
-        System.out.print("\n  || Cod. | Nome Cliente \t| CPF \t\t | Filme     \t   | Registrado em ||");
+        Saida.linhaTabela(80);
+        System.out.print("  || Cod. | Nome Cliente \t| CPF \t\t | Filme     \t   | Registrado em    ||");
         Saida.linhaTabela(80);
         
         if (contratosVenda.isEmpty()) {
-            Saida.centralizarValor("Nenhum contrato encontrado", 80, "  ||", " ");
+            Saida.centralizarValor("Nenhum contrato encontrado", 78, "  ||", " ");
         } else {
              for (int i = 0; i < contratosVenda.size(); i++) {
                 Contrato contrato = contratosVenda.get(i);
@@ -151,7 +156,8 @@ public class Locadora {
     * @params exibirBotaoNovo: Valor booleano que indica se deve exibir opção de novo cliente ou não*/
     public void listarClientes(boolean exibirBotaoNovo) {
         //Imprime o cabeçalho da tabela
-        System.out.print("\n  || Cod. | Nome   \t\t\t| CPF \t\t  |     Telefone     ||");
+        Saida.linhaTabela(72);
+        System.out.print("  || Cod. | Nome   \t\t\t| CPF \t\t  |     Telefone     ||");
         Saida.linhaTabela(72);
         
         if (exibirBotaoNovo) {
