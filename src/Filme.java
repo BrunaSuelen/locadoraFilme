@@ -71,9 +71,7 @@ public class Filme {
         this.alugado = alugado;
     }
 
-    /* Imprime feedback sobre resultado da função
-    * 
-    *  @param mensagem: Mensagem que descreve resultado da função*/
+    /* Imprime detalhes do filme */
     public void exibirDetalhesFilme() {
         System.out.print("\n  ");
         Saida.centralizarValor("DETALHES DO FILME", 50, "||", " ");

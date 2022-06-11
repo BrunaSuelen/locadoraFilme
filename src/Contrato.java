@@ -40,6 +40,7 @@ public class Contrato {
         this.dataRegistro = dataRegistro;
     }
     
+    /* Imprime dados do contrato para preenchimento de tabela */
     public void exibirContratoParaTabela(int codContrato) {
         System.out.print("  || " + codContrato);
         Saida.preencheEspacoFaltante(5, String.valueOf(codContrato), " ");
@@ -57,6 +58,10 @@ public class Contrato {
         Saida.preencheEspacoFaltante(16, this.getDataRegistro(), " ");
     }
 
+    /* Converte a data de String para o formato Date
+    * 
+    * @param dataDevolucao: Data no formato String
+    * @return Mesma data, porém em formato Date*/
     protected Date converteStringParaData(String dataDevolucao) {        
         try {
             return sdf.parse(dataDevolucao);

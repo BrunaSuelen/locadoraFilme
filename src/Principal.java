@@ -230,14 +230,32 @@ public class Principal {
         System.out.println("\n\n  |  Preencha o formulário do Cliente  |");
         Saida.campoDeEntrada("Nome do Cliente");
         String nomeCliente = Entrada.recebeString();
+        Cliente cliente = new Cliente(nomeCliente);
+        boolean cpfInvalido = true;
+        
+        do {
+            Saida.campoDeEntrada("CPF (Ex. XXX.XXX.XXX-XX");
+            String cpf = Entrada.recebeString();
+            
+            if (cliente.validarCPF(cpf) != null) {
+                cpfInvalido = false;
+                System.out.print(cpf);
+            } else {
+                Saida.exibirErro("CPF inválido, tente novamente");
+            }
+        } while(cpfInvalido);
+        
+        do {
+            Saida.campoDeEntrada("Telefone (Ex. XX 9XXXX-XXXX)");
+            String telefone = Entrada.recebeString();
+            
+            if (cliente.validarTelefone(telefone) != null) {
+                cpfInvalido = false;
+            } else {
+                Saida.exibirErro("Telefone inválido, tente novamente");
+            }
+        } while(cpfInvalido);
 
-        Saida.campoDeEntrada("CPF");
-        String cpf = Entrada.recebeString();
-
-        Saida.campoDeEntrada("Telefone");
-        String telefone = Entrada.recebeString();
-
-        Cliente cliente = new Cliente(nomeCliente, cpf, telefone);
         locadora.cadastrarCliente(cliente);
         
         return cliente;

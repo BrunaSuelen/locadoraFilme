@@ -16,7 +16,7 @@ public class Locadora {
         this.gerarDados();
     }
 
-    /* Cadastra automáticamente 8 objetos para a classe cliente */
+    /* Cadastra automáticamente alguns objetos */
     public final void gerarDados() {
         Filme filme1 = new Filme("Alita","Ação","2:30",14, 12, true);
         Filme filme2 = new Filme("Gente Grande","Comedia","2:00",10, 12, true);
@@ -26,11 +26,11 @@ public class Locadora {
         
         ContratoAluguel contratoAluguel1 = new ContratoAluguel(filme1, cliente1, false);
         contratoAluguel1.setDataRegistro(contratoAluguel1.converteStringParaData("01/06/2022"));
-        contratoAluguel1.setDataDevolucao("05/06/2022");
+        //contratoAluguel1.setDataDevolucao("05/06/2022");
         
         ContratoAluguel contratoAluguel2 = new ContratoAluguel(filme2, cliente2, false);
         contratoAluguel2.setDataRegistro(contratoAluguel1.converteStringParaData("12/05/2022"));
-        contratoAluguel2.setDataDevolucao("14/05/2022");
+        //contratoAluguel2.setDataDevolucao("14/05/2022");
         
         
         filmes.add(filme1);
@@ -98,6 +98,7 @@ public class Locadora {
         Saida.linhaTabela(68);
     }
 
+    /* Imprime uma tabela de contratos de alguel previamente cadastrados */
     public void listarContratosAluguel(ArrayList<ContratoAluguel> contratos) {
         //Imprime o cabeçalho da tabela
         System.out.print("\n  || Cod. | Cliente \t\t| CPF  \t");
@@ -124,6 +125,7 @@ public class Locadora {
         Saida.linhaTabela(119);
     }
     
+    /* Imprime uma tabela de contratos de venda previamente cadastrados */
     public void listarContratosVenda() {
         //Imprime o cabeçalho da tabela
         System.out.print("\n  || Cod. | Nome Cliente \t| CPF \t\t | Filme     \t   | Registrado em ||");
@@ -144,7 +146,9 @@ public class Locadora {
         Saida.exibirBotoesDeAcao();
     }
     
-    /* Imprime uma tabela de clientes previamente cadastrados */
+    /* Imprime uma tabela de clientes previamente cadastrados 
+    *
+    * @params exibirBotaoNovo: Valor booleano que indica se deve exibir opção de novo cliente ou não*/
     public void listarClientes(boolean exibirBotaoNovo) {
         //Imprime o cabeçalho da tabela
         System.out.print("\n  || Cod. | Nome   \t\t\t| CPF \t\t  |     Telefone     ||");
@@ -184,21 +188,21 @@ public class Locadora {
         Saida.linhaTabela(72);
     }
         
-    /* Realiza o processo de aluguel do cliente.
-    * Adicionado o contrato enviado ao arrayList de contratosAluguel e altera status de aluguel do cliente
+    /* Realiza o processo de aluguel do filme.
+    * Adicionado o contrato enviado ao arrayList de contratosAluguel e altera status de aluguel do filme
     * 
     * @param contrato: Objeto contrato já instânciado
-    * @param idFilme: Indice de posicionamento do cliente no arrayList*/
+    * @param idFilme: Indice de posicionamento do filme no arrayList*/
     public void alugarFilme(ContratoAluguel contrato, int idFilme) {
         this.filmes.get(idFilme).setAlugado(true);
         this.contratosAluguel.add(contrato);
     }
     
-     /* Realiza o processo de aluguel do cliente.
-    * Adicionado o contrato enviado ao arrayList de contratosAluguel e altera status de aluguel do cliente
+    /* Realiza o processo de venda do filme.
+    * Adicionado o contrato enviado ao arrayList de contratosVenda e remove o filme da lista de filmes da locadora
     * 
     * @param contrato: Objeto contrato já instânciado
-    * @param idFilme: Indice de posicionamento do cliente no arrayList*/
+    * @param idFilme: Indice de posicionamento do filme no arrayList*/
     public void venderFilme(Contrato contrato, int idFilme) {
         this.contratosVenda.add(contrato);
         this.filmes.remove(idFilme);
@@ -206,8 +210,8 @@ public class Locadora {
 
     /* Busca dentro do arrayList de filmes o objeto que possui o mesmo nome passado pelo parâmetro 
     * 
-    * @param nomeFilme: Nome do cliente que deseja encontrar
-    * @return Indice que o cliente está posicionado*/
+    * @param nomeFilme: Nome do filme que deseja encontrar
+    * @return Lista de filmes encontrado com a partir do nome informado pelo cliente*/
     public ArrayList<Filme> buscarFilme(String nomeFilme) {
         ArrayList<Filme> filmesEncontrados = new ArrayList<>();
         
@@ -227,6 +231,9 @@ public class Locadora {
         return filmesEncontrados;
     }
 
+    /* Busca dentro do arrayList de contratos de aluguel filmes em atraso
+    * 
+    * @return Lista de contratos atrasados*/
     public ArrayList<ContratoAluguel> buscarAlugueisAtrasados() {
         ArrayList<ContratoAluguel> alugueisAtrasados = new ArrayList<>();
         
@@ -239,7 +246,10 @@ public class Locadora {
         
         return alugueisAtrasados;
     }
-
+    
+    /* Busca dentro do arrayList de contratos de aluguel vigentes
+    * 
+    * @return Lista de contratos vigentes*/
     public ArrayList<ContratoAluguel> buscarAlugueisVigentes() {
         ArrayList<ContratoAluguel> alugueisAtrasados = new ArrayList<>();
         
@@ -253,6 +263,10 @@ public class Locadora {
         return alugueisAtrasados;
     }
     
+    /* Registra no contrato de devolução o status de devolvido
+    *  Altera o status de alugado do filme vinculado
+    *
+    * @return codContrato: Indice que o contrato se encontra no array de locadora*/
     public void registrarDevolucaoFilme(int codContrato) {
         contratosAluguel.get(codContrato).setDevolvido(true);
         contratosAluguel.get(codContrato).getFilme().setAlugado(false);        

@@ -8,6 +8,10 @@ public class Cliente {
         this.telefone = telefone;
     }
 
+    public Cliente(String nome) {
+        this.nome = nome;
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -32,4 +36,11 @@ public class Cliente {
         this.telefone = telefone;
     }
     
+    public String validarCPF(String cpf) {
+        return cpf.length() != 14 ? null : cpf;
+    }
+    
+    public String validarTelefone(String telefone) {
+        return telefone.length()!= 13 ? null : telefone;
+    }    
 }
