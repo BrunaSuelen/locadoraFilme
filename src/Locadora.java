@@ -33,10 +33,10 @@ public class Locadora {
         
         filmes.add(filme1);
         filmes.add(new Filme("Barraca do beijo","Romance","2:56",14.00, 5.00, 12, 2));
-        filmes.add(new Filme("Invocação do mal","Terror","1:30",18.00, 3.00, 12, 3));
-        filmes.add(new Filme("Pânico","Suspense","2:05",18.00, 3.00, 12, 3));
+        filmes.add(new Filme("Invocacao do mal","Terror","1:30",18.00, 3.00, 12, 3));
+        filmes.add(new Filme("Panico","Suspense","2:05",18.00, 3.00, 12, 3));
         filmes.add(new Filme("A cabana","Drama","1:50",16.00, 3.00, 12, 4));
-        filmes.add(new Filme("Missão Impossível","Ação","2:10",12.00, 4.00, 12, 5));
+        filmes.add(new Filme("Missao Impossivel","Ação","2:10",12.00, 4.00, 12, 5));
         filmes.add(filme2);
         filmes.add(new Filme("Homem Aranha","Ação","2:10",20, 5.00, 12, 2));
         

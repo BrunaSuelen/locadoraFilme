@@ -36,10 +36,21 @@ public class Cliente {
         this.telefone = telefone;
     }
     
+    /* Valida o cpf informado com base no tamanho da string
+     * 
+     * @param cpf: Valor do cpf em string
+     * @return cpf / null: caso o cpf seja inválido
+     */
     public String validarCPF(String cpf) {
         return cpf.length() != 14 ? null : cpf;
     }
     
+    /*
+     * Valida o telefone informado com base no tamanho da string
+     * 
+     * @param telefone: Valor do telefone em string  
+     * @return telefone / null: caso o telefone seja inválido
+     */
     public String validarTelefone(String telefone) {
         return telefone.length()!= 13 ? null : telefone;
     }    

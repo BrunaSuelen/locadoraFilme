@@ -4,17 +4,8 @@ import java.util.Date;
 public class ContratoAluguel extends Contrato {    
     private Date dataDevolucao;
     private boolean devolvido;
-    private double precoFinal;
     private int tempoExtra;
 
-    public ContratoAluguel(Filme filme, Cliente cliente, boolean devolvido) {
-        super(filme, cliente);
-        this.devolvido = devolvido;
-        this.tempoExtra = 0;
-        this.precoFinal = filme.getPreco();
-        this.gerarDataDeDevolucao();
-    }
-    
     public ContratoAluguel(Filme filme, Cliente cliente) {
         super(filme, cliente);
         this.devolvido = false;
@@ -23,6 +14,12 @@ public class ContratoAluguel extends Contrato {
         this.gerarDataDeDevolucao();
     }
 
+    public ContratoAluguel(Filme filme, Cliente cliente, boolean devolvido) {
+        this(filme, cliente);
+        this.devolvido = devolvido;
+    }
+
+    /* Retorna data de devolucao no formato string */
     public String getDataDevolucao() {
         return sdf.format(this.dataDevolucao);
     }
@@ -34,17 +31,23 @@ public class ContratoAluguel extends Contrato {
     public void setDevolvido(boolean devolvido) {
         this.devolvido = devolvido;
     }
+
+    public int getTempoExtra() {
+        return tempoExtra;
+    }
     
+    /* Sobrescreve método da classe pai
+     * Flexibiliza o valor da data de registro, podendo inseri-lo manualmente
+     * 
+     * @param dataRegistro: Data do registro no tipo Date
+    */
     @Override
     public void setDataRegistro(Date dataRegistro) {
         this.dataRegistro = dataRegistro;
         gerarDataDeDevolucao();
     }
 
-    public double getPrecoFinal() {
-        return precoFinal;
-    }
-
+    /* Calcula preço padrão do filme com os adicionais, caso tenha */
     public void gerarPrecoFinal() {
         Filme filme = this.getFilme();
         double valorAdicional = 0;
@@ -56,15 +59,7 @@ public class ContratoAluguel extends Contrato {
         this.precoFinal = filme.getPreco() + valorAdicional;
     }
 
-    public int getTempoExtra() {
-        return tempoExtra;
-    }
-
-    /* Executa um tratamento de erro para a execução do método setDataDevolucao
-    * 
-    * @param erro: Data que o aluguel foi registrado
-    * @return mensagemErro: Descrição do erro apra o usuário
-    */
+    /* Calcula data de devolução com base na data de registro e tempo de aluguel padrão do filme */
     public final void gerarDataDeDevolucao() {
         int tempoAluguel = this.getFilme().getTempoAluguel();
         
@@ -74,10 +69,10 @@ public class ContratoAluguel extends Contrato {
         this.dataDevolucao = c.getTime();
     }
     
-    /* Executa um tratamento de erro para a execução do método setDataDevolucao
-    * 
-    * @param erro: Data que o aluguel foi registrado
-    * @return mensagemErro: Descrição do erro apra o usuário
+    /* 
+    * Adiciona tempo extra na data de devolução do filme e calcula novo valor do contrato
+
+    * @param tempoExtra: Tempo extra em dias
     */
     public void adicionarTempoExtra(int tempoExtra) {
         Calendar c = Calendar.getInstance(); 

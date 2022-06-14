@@ -8,6 +8,7 @@ public class Contrato {
     private Filme filme;
     private Cliente cliente;
     protected Date dataRegistro;
+    protected double precoFinal;
     protected SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public Contrato(Filme filme, Cliente cliente) {
@@ -32,12 +33,17 @@ public class Contrato {
         this.cliente = cliente;
     }
 
+    /* Retorna data de registro no formato string */
     public String getDataRegistro() {
         return sdf.format(this.dataRegistro);
     }
 
     public void setDataRegistro(Date dataRegistro) {
         this.dataRegistro = dataRegistro;
+    }
+
+    public double getPrecoFinal() {
+        return precoFinal;
     }
     
     /* Imprime dados do contrato para preenchimento de tabela */

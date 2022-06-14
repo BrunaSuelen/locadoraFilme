@@ -19,13 +19,7 @@ public class Filme {
     }
     
     public Filme(String nome, String categoria, String duracao, double preco,double precoDiaExtra, int classificacaoIndicativa, boolean alugado,  int tempoAluguel) {
-        this.nome = nome;
-        this.categoria = categoria;
-        this.duracao = duracao;
-        this.preco = preco;
-        this.precoDiaExtra = precoDiaExtra;
-        this.classificacaoIndicativa = classificacaoIndicativa;
-        this.tempoAluguel = tempoAluguel;
+        this(nome, categoria, duracao, preco, precoDiaExtra, classificacaoIndicativa, tempoAluguel);
         this.alugado = alugado;
     }
 
