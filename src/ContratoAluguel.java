@@ -7,7 +7,7 @@ public class ContratoAluguel extends Contrato {
     private int tempoExtra;
 
     public ContratoAluguel(Filme filme, Cliente cliente) {
-        super(filme, cliente);
+        super(filme, cliente, false);
         this.devolvido = false;
         this.tempoExtra = 0;
         this.precoFinal = filme.getPreco();
@@ -111,7 +111,8 @@ public class ContratoAluguel extends Contrato {
         Saida.exibirAtributoDetalhesObjeto("Nome", filme.getNome());
         Saida.exibirAtributoDetalhesObjeto("Categoria", filme.getCategoria());
         Saida.exibirAtributoDetalhesObjeto("Duração", filme.getDuracao());
-        Saida.exibirAtributoDetalhesObjeto("Preço", String.valueOf(filme.getPreco()));
+        Saida.exibirAtributoDetalhesObjeto("Preço", "R$ " +String.valueOf(filme.getPreco()));
+        Saida.exibirAtributoDetalhesObjeto("Taxa dia Adicional", "R$ " + String.valueOf(this.getFilme().getPrecoDiaExtra()));
         Saida.exibirAtributoDetalhesObjeto("Classificação", String.valueOf(filme.getClassificacaoIndicativa()));
         
         Saida.pularLinhaTabela(50);
@@ -127,13 +128,14 @@ public class ContratoAluguel extends Contrato {
         Saida.centralizarValor(" CONTRATO ", 50, "||", "-");
         Saida.exibirAtributoDetalhesObjeto("Data de Registro", this.getDataRegistro());
         Saida.exibirAtributoDetalhesObjeto("Data de Devolução", this.getDataDevolucao());
-        Saida.exibirAtributoDetalhesObjeto("Tempo Padrão", String.valueOf(filme.getTempoAluguel()));
+        Saida.exibirAtributoDetalhesObjeto("Tempo Aluguel", String.valueOf(filme.getTempoAluguel()));
         Saida.exibirAtributoDetalhesObjeto("Tempo Adicional", String.valueOf(this.tempoExtra));
         Saida.exibirAtributoDetalhesObjeto("Tempo Total", String.valueOf((this.tempoExtra + filme.getTempoAluguel())));
-        Saida.exibirAtributoDetalhesObjeto("Valor Adicional", this.tempoExtra == 0 ? "0.00" : String.valueOf(tempoExtra * filme.getPrecoDiaExtra()));
+        Saida.exibirAtributoDetalhesObjeto("Valor Adicional", this.tempoExtra == 0 ? "R$ 0.00" : "R$ "+String.valueOf(tempoExtra * filme.getPrecoDiaExtra()));
         
         Saida.pularLinhaTabela(50);
-        Saida.exibirAtributoDetalhesObjeto("Valor Total à pagar", String.valueOf(this.precoFinal));
+        Saida.exibirAtributoDetalhesObjeto("Valor Total à pagar", "R$ "+String.valueOf(this.precoFinal));
         Saida.linhaTabela(50);
     }
+
 }

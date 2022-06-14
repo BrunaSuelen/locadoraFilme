@@ -206,7 +206,7 @@ public class Principal {
     }
     
     public static void fluxoVenderFilme(int idFilme, Filme filme, Cliente cliente) {
-        ContratoAluguel contrato = new ContratoAluguel(filme, cliente);        
+        Contrato contrato = new Contrato(filme, cliente, true);
         locadora.venderFilme(contrato, idFilme);
     }
        
@@ -225,16 +225,13 @@ public class Principal {
         Saida.campoDeEntrada("Preço");
         double preco = Entrada.recebeDouble();
 
-        Saida.campoDeEntrada("Preço por dia Extra");
-        double precoDiaExtra = Entrada.recebeDouble();
-
         Saida.campoDeEntrada("Classificação Indicativa");
         int classificacao = Entrada.recebeInt();
 
         Saida.campoDeEntrada("Tempo de Aluguel");
         int tempoAluguel = Entrada.recebeInt();
 
-        locadora.cadastrarFilme(new Filme(nome, categoria, duracao, preco, precoDiaExtra, classificacao, tempoAluguel));
+        locadora.cadastrarFilme(new Filme(nome, categoria, duracao, preco, classificacao, tempoAluguel));
         Saida.resultadoFuncao("Cadastro realizado com sucesso!");
         opcaoMenu = Entrada.recebeString();
     }

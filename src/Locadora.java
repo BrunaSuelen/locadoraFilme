@@ -18,8 +18,8 @@ public class Locadora {
 
     /* Cadastra automáticamente alguns objetos */
     public final void gerarDados() {
-        Filme filme1 = new Filme("Alita","Ação","2:30",5.00, 1.20, 12, true, 2);
-        Filme filme2 = new Filme("Gente Grande","Comedia","2:00",4.50, 1.00, 12, true, 3);
+        Filme filme1 = new Filme("Alita","Ação","2:30",5.00, 12, true, 2);
+        Filme filme2 = new Filme("Gente Grande","Comedia","2:00",4.50, 12, true, 3);
         
         Cliente cliente1 = new Cliente("Rogério","789.789.879-87","98845-4545");
         Cliente cliente2 = new Cliente("Beatriz","545.022.112-01","98475-9874");
@@ -32,13 +32,13 @@ public class Locadora {
         
         
         filmes.add(filme1);
-        filmes.add(new Filme("Barraca do beijo","Romance","2:56",6.00, 2.00, 12, 2));
-        filmes.add(new Filme("Invocacao do mal","Terror","1:30",4.50, 1.00, 12, 3));
-        filmes.add(new Filme("Panico","Suspense","2:05",5.00, 1.20, 12, 3));
-        filmes.add(new Filme("A cabana","Drama","1:50",4.00, 1.50, 12, 4));
-        filmes.add(new Filme("Missao Impossivel","Ação","2:10",5.00, 1.50, 12, 5));
+        filmes.add(new Filme("Barraca do beijo","Romance","2:56",6.00, 12, 2));
+        filmes.add(new Filme("Invocacao do mal","Terror","1:30",4.50, 12, 3));
+        filmes.add(new Filme("Panico","Suspense","2:05",5.00, 12, 3));
+        filmes.add(new Filme("A cabana","Drama","1:50",4.00, 12, 4));
+        filmes.add(new Filme("Missao Impossivel","Ação","2:10",5.00, 12, 5));
         filmes.add(filme2);
-        filmes.add(new Filme("Homem Aranha","Ação","2:10",20, 8.00, 3, 2));
+        filmes.add(new Filme("Homem Aranha","Ação","2:10",8, 12, 2));
         
         clientes.add(cliente1);
         clientes.add(cliente2);
@@ -132,22 +132,24 @@ public class Locadora {
     /* Imprime uma tabela de contratos de venda previamente cadastrados */
     public void listarContratosVenda() {
         //Imprime o cabeçalho da tabela
-        Saida.linhaTabela(80);
-        System.out.print("  || Cod. | Nome Cliente \t| CPF \t\t | Filme     \t   | Registrado em    ||");
-        Saida.linhaTabela(80);
+        Saida.linhaTabela(93);
+        System.out.print("  || Cod. | Nome Cliente \t| CPF \t\t | Filme     \t   | Registrado em    |   Preço  ||");
+        Saida.linhaTabela(93);
         
         if (contratosVenda.isEmpty()) {
-            Saida.centralizarValor("Nenhum contrato encontrado", 78, "  ||", " ");
+            Saida.centralizarValor("Nenhum contrato encontrado", 91, "  ||", " ");
         } else {
-             for (int i = 0; i < contratosVenda.size(); i++) {
+            for (int i = 0; i < contratosVenda.size(); i++) {
                 Contrato contrato = contratosVenda.get(i);
                 contrato.exibirContratoParaTabela(i);
 
-                System.out.print("||");
+                System.out.print("| " + contrato.precoFinal);
+                Saida.preencheEspacoFaltante(10, String.valueOf(contrato.precoFinal), " ");
+                System.out.println("||");
             }
         }
         
-        Saida.linhaTabela(80);
+        Saida.linhaTabela(93);
         Saida.exibirBotoesDeAcao();
     }
     

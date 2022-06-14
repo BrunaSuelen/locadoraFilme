@@ -11,10 +11,12 @@ public class Contrato {
     protected double precoFinal;
     protected SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    public Contrato(Filme filme, Cliente cliente) {
+    public Contrato(Filme filme, Cliente cliente, boolean vendaRealizada) {
         this.filme = filme;
         this.cliente = cliente;
         this.dataRegistro = new Date();
+
+        if (vendaRealizada) this.setPrecoFinal();
     }
 
     public Filme getFilme() {
@@ -45,6 +47,10 @@ public class Contrato {
     public double getPrecoFinal() {
         return precoFinal;
     }
+
+    private void setPrecoFinal() {
+        precoFinal = this.filme.getPrecoVenda();
+    }
     
     /* Imprime dados do contrato para preenchimento de tabela */
     public void exibirContratoParaTabela(int codContrato) {
@@ -64,6 +70,7 @@ public class Contrato {
         Saida.preencheEspacoFaltante(16, this.getDataRegistro(), " ");
     }
 
+    
     /* Converte a data de String para o formato Date
     * 
     * @param dataDevolucao: Data no formato String
