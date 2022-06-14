@@ -18,8 +18,8 @@ public class Locadora {
 
     /* Cadastra automáticamente alguns objetos */
     public final void gerarDados() {
-        Filme filme1 = new Filme("Alita","Ação","2:30",14.90, 5.00, 12, true, 2);
-        Filme filme2 = new Filme("Gente Grande","Comedia","2:00",10.50, 2.90, 12, true, 3);
+        Filme filme1 = new Filme("Alita","Ação","2:30",5.00, 1.20, 12, true, 2);
+        Filme filme2 = new Filme("Gente Grande","Comedia","2:00",4.50, 1.00, 12, true, 3);
         
         Cliente cliente1 = new Cliente("Rogério","789.789.879-87","98845-4545");
         Cliente cliente2 = new Cliente("Beatriz","545.022.112-01","98475-9874");
@@ -32,13 +32,13 @@ public class Locadora {
         
         
         filmes.add(filme1);
-        filmes.add(new Filme("Barraca do beijo","Romance","2:56",14.00, 5.00, 12, 2));
-        filmes.add(new Filme("Invocacao do mal","Terror","1:30",18.00, 3.00, 12, 3));
-        filmes.add(new Filme("Panico","Suspense","2:05",18.00, 3.00, 12, 3));
-        filmes.add(new Filme("A cabana","Drama","1:50",16.00, 3.00, 12, 4));
-        filmes.add(new Filme("Missao Impossivel","Ação","2:10",12.00, 4.00, 12, 5));
+        filmes.add(new Filme("Barraca do beijo","Romance","2:56",6.00, 2.00, 12, 2));
+        filmes.add(new Filme("Invocacao do mal","Terror","1:30",4.50, 1.00, 12, 3));
+        filmes.add(new Filme("Panico","Suspense","2:05",5.00, 1.20, 12, 3));
+        filmes.add(new Filme("A cabana","Drama","1:50",4.00, 1.50, 12, 4));
+        filmes.add(new Filme("Missao Impossivel","Ação","2:10",5.00, 1.50, 12, 5));
         filmes.add(filme2);
-        filmes.add(new Filme("Homem Aranha","Ação","2:10",20, 5.00, 12, 2));
+        filmes.add(new Filme("Homem Aranha","Ação","2:10",20, 8.00, 3, 2));
         
         clientes.add(cliente1);
         clientes.add(cliente2);
